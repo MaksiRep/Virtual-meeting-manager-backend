@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RU.NSU.FIT.VirtualMeetingManager.Backend", "RU.NSU.FIT.VirtualMeetingManager.Backend\RU.NSU.FIT.VirtualMeetingManager.Backend.csproj", "{881BC1C7-176B-4438-A413-E0C67491619D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RU.NSU.FIT.VirtualManager.Domain", "RU.NSU.FIT.VirtualManager.Domain\RU.NSU.FIT.VirtualManager.Domain.csproj", "{C965D73B-0E6A-4A8B-8804-2BBFD2E37EE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RU.NSU.FIT.VirtualMeetingManager.Application", "RU.NSU.FIT.VirtualMeetingManager.Application\RU.NSU.FIT.VirtualMeetingManager.Application.csproj", "{48855FC2-D19B-44A8-875F-084E4EF40105}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1_Domain", "1_Domain", "{E7C3C956-C949-4975-97BB-273C4AE7EC78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2_Application", "2_Application", "{7DE503E6-2D8D-48BC-B887-146F98C0969C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3_Endpoints", "3_Endpoints", "{9DBF83E5-46E4-4B30-AE7F-490DEFEB727D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4_Infrastructure", "4_Infrastructure", "{FC619684-A3CE-409F-BF67-2D4BBB426DEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RU.NSU.FIT.VirtualMeetingManager.Infrastructure", "RU.NSU.FIT.VirtualMeetingManager.Infrastructure\RU.NSU.FIT.VirtualMeetingManager.Infrastructure.csproj", "{F00075A9-15EB-47DD-9308-E1F518827464}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RU.NSU.FIT.VirtualMeetingManager.Infrastructure.Database", "RU.NSU.FIT.VirtualMeetingManager.Infrastructure.Database\RU.NSU.FIT.VirtualMeetingManager.Infrastructure.Database.csproj", "{41E8FF5C-0D33-4DC2-98D9-F778BFE49C3E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{881BC1C7-176B-4438-A413-E0C67491619D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{881BC1C7-176B-4438-A413-E0C67491619D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{881BC1C7-176B-4438-A413-E0C67491619D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{881BC1C7-176B-4438-A413-E0C67491619D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C965D73B-0E6A-4A8B-8804-2BBFD2E37EE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C965D73B-0E6A-4A8B-8804-2BBFD2E37EE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C965D73B-0E6A-4A8B-8804-2BBFD2E37EE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C965D73B-0E6A-4A8B-8804-2BBFD2E37EE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48855FC2-D19B-44A8-875F-084E4EF40105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48855FC2-D19B-44A8-875F-084E4EF40105}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48855FC2-D19B-44A8-875F-084E4EF40105}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48855FC2-D19B-44A8-875F-084E4EF40105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F00075A9-15EB-47DD-9308-E1F518827464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F00075A9-15EB-47DD-9308-E1F518827464}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F00075A9-15EB-47DD-9308-E1F518827464}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F00075A9-15EB-47DD-9308-E1F518827464}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41E8FF5C-0D33-4DC2-98D9-F778BFE49C3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41E8FF5C-0D33-4DC2-98D9-F778BFE49C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41E8FF5C-0D33-4DC2-98D9-F778BFE49C3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41E8FF5C-0D33-4DC2-98D9-F778BFE49C3E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C965D73B-0E6A-4A8B-8804-2BBFD2E37EE6} = {E7C3C956-C949-4975-97BB-273C4AE7EC78}
+		{48855FC2-D19B-44A8-875F-084E4EF40105} = {7DE503E6-2D8D-48BC-B887-146F98C0969C}
+		{881BC1C7-176B-4438-A413-E0C67491619D} = {9DBF83E5-46E4-4B30-AE7F-490DEFEB727D}
+		{F00075A9-15EB-47DD-9308-E1F518827464} = {FC619684-A3CE-409F-BF67-2D4BBB426DEF}
+		{41E8FF5C-0D33-4DC2-98D9-F778BFE49C3E} = {FC619684-A3CE-409F-BF67-2D4BBB426DEF}
+	EndGlobalSection
+EndGlobal
