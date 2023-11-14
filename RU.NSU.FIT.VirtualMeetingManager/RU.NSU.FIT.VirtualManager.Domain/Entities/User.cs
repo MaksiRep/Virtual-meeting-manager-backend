@@ -33,7 +33,9 @@ public class User : IdentityUser<Guid>
     /// Роли пользователя
     /// </summary>
     public IList<Role> Roles { get; private set; } = new List<Role>();
-
+    
+    public IList<Meeting> Meetings { get; private set; } = new List<Meeting>();
+    
     public IList<RefreshToken> RefreshTokens { get; private set; } = new List<RefreshToken>();
 
     public void AddRefreshToken(RefreshToken refreshToken)

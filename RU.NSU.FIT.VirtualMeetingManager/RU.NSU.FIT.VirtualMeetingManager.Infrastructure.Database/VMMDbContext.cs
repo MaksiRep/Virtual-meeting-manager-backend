@@ -12,6 +12,7 @@ public class VMMDbContext : IdentityDbContext<User, Role, Guid, IdentityUserClai
     public VMMDbContext(DbContextOptions options) : base(options) {}
     
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<Meeting> Meetings => Set<Meeting>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
