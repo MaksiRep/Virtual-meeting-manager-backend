@@ -20,4 +20,10 @@ public class UsersController : ControllerBase
     {
         return _mediator.Send(query, HttpContext.RequestAborted);
     }
+    
+    [HttpPost("getUsersByMeeting")]
+    public Task<ICollection<UserDto>> GetUsersList(GetUsersListByEventQuery query)
+    {
+        return _mediator.Send(query, HttpContext.RequestAborted);
+    }
 }
