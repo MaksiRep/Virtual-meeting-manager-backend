@@ -16,13 +16,13 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("getUsers")]
-    public Task<ICollection<UserDto>> GetUsersList(GetUsersListQuery query)
+    public Task<GetUserListResponse> GetUsersList(GetUsersListQuery query)
     {
         return _mediator.Send(query, HttpContext.RequestAborted);
     }
     
-    [HttpPost("getUsersByMeeting")]
-    public Task<ICollection<UserDto>> GetUsersList(GetUsersListByEventQuery query)
+    [HttpPost("getUsersListByMeeting")]
+    public Task<ICollection<UserDto>> GetUsersList(GetUsersListByMeetingQuery query)
     {
         return _mediator.Send(query, HttpContext.RequestAborted);
     }

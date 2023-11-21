@@ -26,6 +26,8 @@ public class User : IdentityUser<Guid>
     /// Дата рождения
     /// </summary>
     public DateOnly BirthDate { get; private set; }
+    
+    public GenderType Gender { get; private set; }
 
     public DateTime RegisteredOn { get; private set; }
 
