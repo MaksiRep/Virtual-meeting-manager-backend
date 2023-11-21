@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RU.NSU.FIT.VirtualMeetingManager;
@@ -11,9 +12,11 @@ using RU.NSU.FIT.VirtualMeetingManager;
 namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
 {
     [DbContext(typeof(VMMDbContext))]
-    partial class VMMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231114150736_CreateMeetings")]
+    partial class CreateMeetings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,10 +138,7 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -155,6 +155,10 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
+
+                    b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
@@ -295,17 +299,17 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                             Id = new Guid("0eddcd7a-b582-4637-ba9c-b1ed69cc361a"),
                             AccessFailedCount = 0,
                             BirthDate = new DateOnly(2000, 1, 1),
-                            ConcurrencyStamp = "69bd6e62-3003-48f7-b28f-ff28f2e1c226",
+                            ConcurrencyStamp = "67ae8cc2-a4a8-47ea-8ae3-413834ef89bb",
                             Email = "admin@test.test",
                             EmailConfirmed = false,
                             FirstName = "adminName",
                             LastName = "lastName",
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@TEST.TEST",
-                            PasswordHash = "AQAAAAIAAYagAAAAELcdhTLqSZKNZbdbbPPKKN/PfpAn4ud/o2qY7pW95iENzEs3TdBlR+IdLtsr1eT7jQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFBxofNtJTP2Hzcqzvk9XK5YOABC2n9WVPKnXBAyxjN6MyNWE+NTgtHZ32Om/rqKWQ==",
                             PhoneNumberConfirmed = false,
                             RegisteredOn = new DateTime(2020, 10, 10, 0, 0, 0, 0, DateTimeKind.Utc),
-                            SecurityStamp = "3b209f4e-970d-438b-a8e3-a214894938d6",
+                            SecurityStamp = "6b6e4060-e627-4a0a-be95-a4667efc9db4",
                             TwoFactorEnabled = false,
                             UserName = "admin@test.test"
                         },
@@ -314,17 +318,17 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                             Id = new Guid("70f36e69-f7b9-42fc-9e77-a59f3fd9bfac"),
                             AccessFailedCount = 0,
                             BirthDate = new DateOnly(2000, 1, 1),
-                            ConcurrencyStamp = "5fd383ac-5f68-4397-9d74-8f2b02ba5de3",
+                            ConcurrencyStamp = "67fa3b44-c077-4ba5-b506-dda345a36632",
                             Email = "user@test.test",
                             EmailConfirmed = false,
                             FirstName = "userName",
                             LastName = "lastName",
                             LockoutEnabled = false,
                             NormalizedUserName = "USER@TEST.TEST",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDuFV7CkepW771AFdFhNXSfW6Q7Lz4ZE8fnwvwVrc5yqxWp69k5QeKxVtATLqlcjjw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEO+VSvtV0kbcdJyvN0fY7jhVRgwyXDXKRNEPms7CFI27D0ue47+nklkl7lvI1bUIxw==",
                             PhoneNumberConfirmed = false,
                             RegisteredOn = new DateTime(2020, 10, 10, 0, 0, 0, 0, DateTimeKind.Utc),
-                            SecurityStamp = "8d268aa0-63c3-43d8-9482-f61228e41229",
+                            SecurityStamp = "339643b2-bcc7-4042-ae96-f042678205e1",
                             TwoFactorEnabled = false,
                             UserName = "user@test.test"
                         });
