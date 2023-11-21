@@ -6,16 +6,16 @@ public class Meeting
     {
     }
 
-    public Meeting(string name, string description, DateTime startDate, DateTime endDate, string image, int maxUsers, int minAge, string sex)
+    public Meeting(string name, string description, DateTime startDate, DateTime endDate, string imageUrl, int maxUsers, int minAge, GenderType gender)
     {
         Name = name;
         Description = description;
         StartDate = startDate;
         EndDate = endDate;
-        Image = image;
+        ImageUrl = imageUrl;
         MaxUsers = maxUsers;
         MinAge = minAge;
-        Sex = sex;
+        Gender = gender;
     }
 
     public int Id { get; private set; }
@@ -28,13 +28,13 @@ public class Meeting
     
     public DateTime EndDate { get; private set; }
     
-    public string Image { get; private set; }
+    public string ImageUrl { get; private set; }
     
     public int MaxUsers { get; private set; }
     
     public int MinAge { get; private set; }
     
-    public string Sex { get; private set; }
+    public GenderType Gender { get; private set; }
     
     public User Manager { get; private set; }
     public IList<User> Users { get; private set; } = new List<User>();
