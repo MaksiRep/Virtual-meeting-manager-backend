@@ -34,7 +34,7 @@ public class Meeting
     
     public int MinAge { get; private set; }
     
-    public GenderType Gender { get; private set; }
+    public GenderType? Gender { get; private set; }
     
     public User Manager { get; private set; }
     public IList<User> Users { get; private set; } = new List<User>();

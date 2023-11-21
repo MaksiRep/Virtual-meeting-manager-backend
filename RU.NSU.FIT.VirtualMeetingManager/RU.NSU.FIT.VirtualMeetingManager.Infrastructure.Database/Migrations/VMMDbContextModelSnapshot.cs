@@ -135,7 +135,7 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<byte>("Gender")
+                    b.Property<byte?>("Gender")
                         .HasColumnType("smallint");
 
                     b.Property<string>("ImageUrl")
@@ -298,7 +298,7 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                             Id = new Guid("0eddcd7a-b582-4637-ba9c-b1ed69cc361a"),
                             AccessFailedCount = 0,
                             BirthDate = new DateOnly(2000, 1, 1),
-                            ConcurrencyStamp = "6e2a27e6-308c-48c9-a41e-eafcd89ac0e5",
+                            ConcurrencyStamp = "9b06973f-2abb-416a-94f8-13b8ef626098",
                             Email = "admin@test.test",
                             EmailConfirmed = false,
                             FirstName = "adminName",
@@ -306,10 +306,10 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                             LastName = "lastName",
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@TEST.TEST",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHiHOiOwkr3vYOPv6T81ZGZsM3ngWdmD0NcF6EvZD9mNaEJCq4pmHCK//ukPXz1G2A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENL6gnbbUA8gw1EuamW0A4FpDhc4r0R5nK2e7fI60ZvORATJvK45LFAhws0kKZQcqw==",
                             PhoneNumberConfirmed = false,
                             RegisteredOn = new DateTime(2020, 10, 10, 0, 0, 0, 0, DateTimeKind.Utc),
-                            SecurityStamp = "6c4953fe-2da4-4da1-b4a5-025e5eecfdaa",
+                            SecurityStamp = "07c2ce28-3847-45ab-809e-ec785fabbfe8",
                             TwoFactorEnabled = false,
                             UserName = "admin@test.test"
                         },
@@ -318,7 +318,7 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                             Id = new Guid("70f36e69-f7b9-42fc-9e77-a59f3fd9bfac"),
                             AccessFailedCount = 0,
                             BirthDate = new DateOnly(2000, 1, 1),
-                            ConcurrencyStamp = "a8f52338-0ec9-423b-968f-9d6b03fd709e",
+                            ConcurrencyStamp = "1f9e5a2e-558e-43c2-b02b-6f38fc34c7ce",
                             Email = "user@test.test",
                             EmailConfirmed = false,
                             FirstName = "userName",
@@ -326,10 +326,10 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                             LastName = "lastName",
                             LockoutEnabled = false,
                             NormalizedUserName = "USER@TEST.TEST",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ5oenbS+Z1J/X2TABU800Dp9DDrucpQz0FSkk+InZeax7sSgoZd1bzmR/aVt8mFMg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENTbPDZAs/gaUEJVgJ11HFYSTx955MzAT4zVENho91z5+ipgiC5Ir8uAMSRDOHquEA==",
                             PhoneNumberConfirmed = false,
                             RegisteredOn = new DateTime(2020, 10, 10, 0, 0, 0, 0, DateTimeKind.Utc),
-                            SecurityStamp = "be48e84e-d37c-4800-bf5f-5b52519a2954",
+                            SecurityStamp = "07cdf7ec-d43a-48dc-aad7-cf8e9abb498a",
                             TwoFactorEnabled = false,
                             UserName = "user@test.test"
                         });
