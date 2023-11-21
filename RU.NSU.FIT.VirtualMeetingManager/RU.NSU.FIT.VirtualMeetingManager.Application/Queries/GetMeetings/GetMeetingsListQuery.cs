@@ -17,7 +17,7 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
 
     public DateTime? EndDate { get; init; }
 
-    public GenderType GenderType { get; init; }
+    public GenderType? GenderType { get; init; }
 
     public class GetMeetingsListQueryHandler : IRequestHandler<GetMeetingsListQuery, GetMeetingsListResponse>
     {
@@ -36,7 +36,7 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
                 .Where(m => request.MinAge == 0 || m.MinAge >= request.MinAge)
                 .Where(m => request.StartDate == null || m.StartDate >= request.StartDate)
                 .Where(m => request.EndDate == null || m.EndDate <= request.EndDate)
-                .Where(m => request.GenderType == 0 || m.Gender.Equals(request.GenderType));
+                .Where(m => request.GenderType == null || m.Gender == request.GenderType);
             var totalCount = await query.CountAsync(cancellationToken);
             var result = await query
                 .Skip(request.Skip)
