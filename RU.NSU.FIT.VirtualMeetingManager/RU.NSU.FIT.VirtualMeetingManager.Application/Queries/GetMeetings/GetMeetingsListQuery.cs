@@ -32,7 +32,6 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
             CancellationToken cancellationToken)
         {
             var query = _dbContext.Meetings
-                .AsQueryable()
                 .Where(m => request.MinAge == 0 || m.MinAge >= request.MinAge)
                 .Where(m => request.StartDate == null || m.StartDate >= request.StartDate)
                 .Where(m => request.EndDate == null || m.EndDate <= request.EndDate)
