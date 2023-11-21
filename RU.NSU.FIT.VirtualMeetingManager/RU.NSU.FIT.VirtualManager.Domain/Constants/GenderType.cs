@@ -1,7 +1,7 @@
 namespace RU.NSU.FIT.VirtualManager.Domain.Entities;
 
-public enum GenderType
+public enum GenderType : byte
 {
-    Male,
-    Female
+    Male = 1, 
+    Female = 2
 }
