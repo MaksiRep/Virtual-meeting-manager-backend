@@ -28,12 +28,13 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
             var result = await query
                 .Skip(request.Skip)
                 .Take(request.Take)
-                .Select(m => new MeetingDto
+                .Select(m => new MeetingListItemDto
                 {
                     Id = m.Id,
                     Name = m.Name,
-                    Description = m.Description,
-                    Image = m.Image,
+                    StartDate = m.StartDate,
+                    EndDate = m.EndDate,
+                    ImageUrl = m.ImageUrl,
                 })
                 .ToListAsync(cancellationToken);
             return new GetMeetingsListResponse()
