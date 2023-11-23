@@ -25,8 +25,7 @@ public record GetUsersListQuery : IRequest<GetUserListResponse>
         public async Task<GetUserListResponse> Handle(GetUsersListQuery request, CancellationToken cancellationToken)
         {
             var query = _vmmDbContext.Users
-                .AsQueryable()
-                .Where(u => request.Email.IsNullOrEmpty() || u.Email == request.Email);
+                .Where(u => string.IsNullOrEmpty(request.Email) || u.Email == request.Email);
             var totalCount = await query.CountAsync(cancellationToken);
             
             var users = await query
