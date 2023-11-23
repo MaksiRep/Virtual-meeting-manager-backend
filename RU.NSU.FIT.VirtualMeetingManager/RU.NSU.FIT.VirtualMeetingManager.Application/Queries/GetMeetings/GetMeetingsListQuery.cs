@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RU.NSU.FIT.VirtualManager.Domain.Entities;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Common.Pagination;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Services;
 
@@ -9,6 +10,14 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
 {
     public int Skip { get; init; }
     public int Take { get; init; }
+
+    public int MinAge { get; init; }
+
+    public DateTime? StartDate { get; init; }
+
+    public DateTime? EndDate { get; init; }
+
+    public GenderType? GenderType { get; init; }
 
     public class GetMeetingsListQueryHandler : IRequestHandler<GetMeetingsListQuery, GetMeetingsListResponse>
     {
@@ -23,7 +32,10 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
             CancellationToken cancellationToken)
         {
             var query = _dbContext.Meetings
-                .AsQueryable();
+                .Where(m => request.MinAge == 0 || m.MinAge >= request.MinAge)
+                .Where(m => request.StartDate == null || m.StartDate >= request.StartDate)
+                .Where(m => request.EndDate == null || m.EndDate <= request.EndDate)
+                .Where(m => request.GenderType == null || m.Gender == request.GenderType);
             var totalCount = await query.CountAsync(cancellationToken);
             var result = await query
                 .Skip(request.Skip)
