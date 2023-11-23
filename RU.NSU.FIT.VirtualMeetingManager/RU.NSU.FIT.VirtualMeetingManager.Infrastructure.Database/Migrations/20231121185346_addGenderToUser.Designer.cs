@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RU.NSU.FIT.VirtualMeetingManager;
@@ -11,9 +12,11 @@ using RU.NSU.FIT.VirtualMeetingManager;
 namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
 {
     [DbContext(typeof(VMMDbContext))]
-    partial class VMMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231121185346_addGenderToUser")]
+    partial class addGenderToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
