@@ -1,4 +1,4 @@
-namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.GetMeetings;
+namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingsList;
 
 public record MeetingListItemDto
 {

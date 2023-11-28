@@ -1,4 +1,4 @@
-﻿namespace RU.NSU.FIT.VirtualManager.Domain.ValueTypes;
+﻿namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
 
 public enum RoleType
 {

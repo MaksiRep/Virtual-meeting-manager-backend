@@ -1,6 +1,4 @@
-﻿using RU.NSU.FIT.VirtualManager.Domain.Entities;
-
-namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.GetUsers;
+﻿namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
 
 public record UserDto
 {
@@ -10,5 +8,4 @@ public record UserDto
     public string Email { get; init; }
     public DateOnly BirthDate { get; init; }
     public GenderType Gender { get; init; }
-    
 }
