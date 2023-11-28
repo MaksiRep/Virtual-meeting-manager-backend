@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <AssemblyName>RU.NSU.FIT.VirtualMeetingManager.Backend</AssemblyName>
         <RootNamespace>RU.NSU.FIT.VirtualMeetingManager.Backend</RootNamespace>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -93,6 +94,12 @@
     <ItemGroup>
       <ProjectReference Include="..\RU.NSU.FIT.VirtualMeetingManager.Infrastructure.Database\RU.NSU.FIT.VirtualMeetingManager.Infrastructure.Database.csproj" />
       <ProjectReference Include="..\RU.NSU.FIT.VirtualMeetingManager.Infrastructure\RU.NSU.FIT.VirtualMeetingManager.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
