@@ -1,18 +1,22 @@
-﻿using MediatR;
+﻿using JetBrains.Annotations;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Extensions;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Services;
 
-namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.GetUsers;
+namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUsersList;
 
 public record GetUsersListQuery : IRequest<GetUserListResponse>
 {
     public string? Email { get; init; }
+    public int? MeetingId { get; init; }
     
     public int Skip { get; init; }
     
     public int Take { get; init; }
     
+    [UsedImplicitly]
     public sealed class GetUsersListQueryHandler : IRequestHandler<GetUsersListQuery, GetUserListResponse>
     {
         private readonly IVMMDbContext _vmmDbContext;
@@ -25,7 +29,8 @@ public record GetUsersListQuery : IRequest<GetUserListResponse>
         public async Task<GetUserListResponse> Handle(GetUsersListQuery request, CancellationToken cancellationToken)
         {
             var query = _vmmDbContext.Users
-                .Where(u => string.IsNullOrEmpty(request.Email) || u.Email == request.Email);
+                .FilterByEmail(request.Email);
+            
             var totalCount = await query.CountAsync(cancellationToken);
             
             var users = await query
@@ -38,7 +43,7 @@ public record GetUsersListQuery : IRequest<GetUserListResponse>
                     LastName = u.LastName,
                     Email = u.Email,
                     BirthDate = u.BirthDate,
-                    Gender = u.Gender
+                    Gender = (GenderType) u.Gender
                 })
                 .ToListAsync(cancellationToken);
 

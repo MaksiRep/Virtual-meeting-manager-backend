@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using RU.NSU.FIT.VirtualManager.Domain.ValueTypes;
 
 namespace RU.NSU.FIT.VirtualManager.Domain.Entities;
 

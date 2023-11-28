@@ -1,4 +1,4 @@
-namespace RU.NSU.FIT.VirtualManager.Domain.Entities;
+namespace RU.NSU.FIT.VirtualManager.Domain.ValueTypes;
 
 public enum GenderType : byte
 {

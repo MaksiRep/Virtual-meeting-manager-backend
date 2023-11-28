@@ -1,6 +1,7 @@
 ﻿using RU.NSU.FIT.VirtualMeetingManager.Application.Common.Pagination;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
 
-namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.GetUsers;
+namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUsersList;
 
 public class GetUserListResponse : IPagedListResponse<UserDto>
 {

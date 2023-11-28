@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.GetUsers;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetCurrentUser;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUsersList;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Backend.Controllers;
 
@@ -15,14 +16,14 @@ public class UsersController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("getUsers")]
-    public Task<GetUserListResponse> GetUsersList(GetUsersListQuery query)
+    [HttpGet("getCurrentUser")]
+    public Task<CurrentUserDto> GetCurrentUser()
     {
-        return _mediator.Send(query, HttpContext.RequestAborted);
+        return _mediator.Send(new GetCurrentUserQuery(), HttpContext.RequestAborted);
     }
-    
-    [HttpPost("getUsersListByMeeting")]
-    public Task<ICollection<UserDto>> GetUsersList(GetUsersListByMeetingQuery query)
+
+    [HttpPost("getUsersList")]
+    public Task<GetUserListResponse> GetUsersList(GetUsersListQuery query)
     {
         return _mediator.Send(query, HttpContext.RequestAborted);
     }

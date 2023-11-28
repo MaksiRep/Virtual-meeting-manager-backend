@@ -1,6 +1,6 @@
 using RU.NSU.FIT.VirtualMeetingManager.Application.Common.Pagination;
 
-namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.GetMeetings;
+namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingsList;
 
 public class GetMeetingsListResponse : IPagedListResponse<MeetingListItemDto>
 {
