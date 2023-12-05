@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meeting.CreateMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
-using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.CreateMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingsList;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingUsers;
 
@@ -31,8 +31,7 @@ public class MeetingsController : ControllerBase
     }
     
     [HttpPost("createMeeting")]
-    public async Task<IActionResult> CreateMeeting(CreateMeetingQuery query){
-        await _mediator.Send(query);
-        return Ok();
+    public async Task CreateMeeting(CreateMeetingCommand command){
+        await _mediator.Send(command);
     }
 }

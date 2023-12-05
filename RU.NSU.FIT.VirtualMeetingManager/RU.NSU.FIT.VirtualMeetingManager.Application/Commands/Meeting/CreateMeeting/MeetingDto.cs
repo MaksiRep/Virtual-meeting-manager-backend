@@ -1,6 +1,6 @@
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
 
-namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.CreateMeeting;
+namespace RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meeting.CreateMeeting;
 
 public class MeetingDto
 {
