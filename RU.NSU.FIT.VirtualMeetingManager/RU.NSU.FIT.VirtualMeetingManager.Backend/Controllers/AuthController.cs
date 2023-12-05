@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RU.NSU.FIT.VirtualManager.Domain.Auth;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.Base;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.RefreshToken;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.Registration;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.SignIn;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Backend.Controllers;
@@ -32,6 +33,12 @@ public class AuthController : Controller
     /// </summary>
     [HttpPost("refreshToken")]
     public Task<AuthResponse> RefreshToken(RefreshTokenCommand command)
+    {
+        return _mediator.Send(command, HttpContext.RequestAborted);
+    }
+    
+    [HttpPost("registration")]
+    public Task<AuthResponse> Registration(RegistrationCommand command)
     {
         return _mediator.Send(command, HttpContext.RequestAborted);
     }
