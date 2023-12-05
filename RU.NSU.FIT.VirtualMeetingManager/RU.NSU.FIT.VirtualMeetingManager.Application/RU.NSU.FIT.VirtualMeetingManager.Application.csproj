@@ -21,6 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Commands\Meeting\" />
       <Folder Include="Queries\Users\Base" />
     </ItemGroup>
 

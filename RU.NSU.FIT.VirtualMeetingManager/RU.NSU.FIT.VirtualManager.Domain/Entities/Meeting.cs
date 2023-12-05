@@ -1,6 +1,7 @@
+using RU.NSU.FIT.VirtualManager.Domain.Entities;
 using RU.NSU.FIT.VirtualManager.Domain.ValueTypes;
 
-namespace RU.NSU.FIT.VirtualManager.Domain.Entities;
+
 
 public class Meeting
 {
@@ -8,7 +9,16 @@ public class Meeting
     {
     }
 
-    public Meeting(string name, string description, DateTime startDate, DateTime endDate, string imageUrl, int? maxUsers, int? minAge, GenderType gender)
+    public Meeting(string name, 
+        string description, 
+        DateTime startDate, 
+        DateTime endDate, 
+        string imageUrl, 
+        int? maxUsers, 
+        int? minAge, 
+        GenderType? gender, 
+        User manager, 
+        string? shortDescription)
     {
         Name = name;
         Description = description;
@@ -18,6 +28,8 @@ public class Meeting
         MaxUsers = maxUsers;
         MinAge = minAge;
         Gender = gender;
+        Manager = manager;
+        ShortDescription = shortDescription;
     }
 
     public int Id { get; private set; }
@@ -25,6 +37,8 @@ public class Meeting
     public string Name { get; private set; }
     
     public string Description { get; private set; }
+    
+    public string? ShortDescription { get; private set; }
     
     public DateTime StartDate { get; private set; }
     
