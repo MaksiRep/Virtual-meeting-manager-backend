@@ -1,13 +1,18 @@
 using MediatR;
 using RU.NSU.FIT.VirtualManager.Domain.Auth;
+using RU.NSU.FIT.VirtualManager.Domain.Entities;
+using RU.NSU.FIT.VirtualManager.Domain.Exceptions;
+using RU.NSU.FIT.VirtualManager.Domain.ValueTypes;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Services;
 using GenderType = RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base.GenderType;
 using GenderTypeDto = RU.NSU.FIT.VirtualManager.Domain.ValueTypes.GenderType;
 
-namespace RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meeting.CreateMeeting;
+namespace RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meeting.UpdateMeeting;
 
-public class CreateMeetingCommand : IRequest
+public class UpdateMeetingCommand : IRequest
 {
+    public int id { get; init; }
+
     public string Name { get; init; }
 
     public string Description { get; init; }
@@ -26,24 +31,34 @@ public class CreateMeetingCommand : IRequest
 
     public string ShortDescription { get; init; }
 
-    public class CreateMeetingCommandHandler : IRequestHandler<CreateMeetingCommand>
+    public class UpdateMeetingCommandHandler : IRequestHandler<UpdateMeetingCommand>
     {
         private readonly IVMMDbContext _dbContext;
 
         private readonly ICurrentUser _currentUser;
 
-        public CreateMeetingCommandHandler(IVMMDbContext dbContext, ICurrentUser currentUser)
+        public UpdateMeetingCommandHandler(IVMMDbContext dbContext, ICurrentUser currentUser)
         {
             _dbContext = dbContext;
             _currentUser = currentUser;
         }
 
-        public async Task Handle(CreateMeetingCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateMeetingCommand request, CancellationToken cancellationToken)
         {
+            var meeting = await _dbContext.Meetings.FindAsync(request.id);
+            if (meeting == null)
+            {
+                throw new BadRequestException("Мероприятие не найдено");
+            }
+
             var user = await _dbContext.Users.FindAsync(_currentUser.Id);
-            _dbContext.Meetings.Add(new global::Meeting
-            (
-                request.Name,
+
+            if (meeting.Manager != user)
+            {
+                throw new BadRequestException("Пользователь не является организатором");
+            }
+
+            meeting.UpdateMeeting(request.Name,
                 request.Description,
                 request.StartDate,
                 request.EndDate,
@@ -51,9 +66,11 @@ public class CreateMeetingCommand : IRequest
                 request.MaxUsers,
                 request.MinAge,
                 (GenderTypeDto)request.Gender!,
-                user,
-                request.ShortDescription
-            ));
+                request.ShortDescription);
+
+
+            _dbContext.Meetings.Update(meeting);
+
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
