@@ -10,12 +10,10 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUsersLis
 public record GetUsersListQuery : IRequest<GetUserListResponse>
 {
     public string? Email { get; init; }
-    public int? MeetingId { get; init; }
-    
+
     public int Skip { get; init; }
-    
     public int Take { get; init; }
-    
+
     [UsedImplicitly]
     public sealed class GetUsersListQueryHandler : IRequestHandler<GetUsersListQuery, GetUserListResponse>
     {
@@ -30,9 +28,9 @@ public record GetUsersListQuery : IRequest<GetUserListResponse>
         {
             var query = _vmmDbContext.Users
                 .FilterByEmail(request.Email);
-            
+
             var totalCount = await query.CountAsync(cancellationToken);
-            
+
             var users = await query
                 .Skip(request.Skip)
                 .Take(request.Take)
@@ -47,11 +45,11 @@ public record GetUsersListQuery : IRequest<GetUserListResponse>
                 })
                 .ToListAsync(cancellationToken);
 
-            return new GetUserListResponse()
+            return new GetUserListResponse
             {
                 Items = users,
                 TotalCount = totalCount
-            } ;
+            };
         }
     }
 }

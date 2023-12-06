@@ -37,30 +37,12 @@ public class AuthController : Controller
         return _mediator.Send(command, HttpContext.RequestAborted);
     }
     
+    /// <summary>
+    /// Регистрирует нового пользователя в системе
+    /// </summary>
     [HttpPost("registration")]
     public Task<AuthResponse> Registration(RegistrationCommand command)
     {
         return _mediator.Send(command, HttpContext.RequestAborted);
-    }
-
-    [Authorize]
-    [HttpGet("testAuth")]
-    public IActionResult TestAuth()
-    {
-        return Ok();
-    }
-
-    [Authorize(Roles = $"{RoleConstants.Admin}")]
-    [HttpGet("testAuthAdmin")]
-    public IActionResult TestAuthAdmin()
-    {
-        return Ok();
-    }
-
-    [Authorize(Roles = $"{RoleConstants.User}")]
-    [HttpGet("testAuthUser")]
-    public IActionResult TestAuthUser()
-    {
-        return Ok();
     }
 }
