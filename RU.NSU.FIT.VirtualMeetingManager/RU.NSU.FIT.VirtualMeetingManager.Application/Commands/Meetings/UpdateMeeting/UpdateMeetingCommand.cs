@@ -1,15 +1,18 @@
+using JetBrains.Annotations;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using RU.NSU.FIT.VirtualManager.Domain.Auth;
 using RU.NSU.FIT.VirtualManager.Domain.Exceptions;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Extensions;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Services;
 using GenderTypeDto = RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base.GenderType;
 using GenderType = RU.NSU.FIT.VirtualManager.Domain.ValueTypes.GenderType;
 
-namespace RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meeting.UpdateMeeting;
+namespace RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.UpdateMeeting;
 
 public class UpdateMeetingCommand : IRequest
 {
-    public int id { get; init; }
+    public int Id { get; init; }
 
     public string Name { get; init; }
 
@@ -18,17 +21,16 @@ public class UpdateMeetingCommand : IRequest
     public DateTime StartDate { get; init; }
 
     public DateTime EndDate { get; init; }
-
-    public string ImageUrl { get; init; }
-
+    
     public int? MaxUsers { get; init; }
 
     public int? MinAge { get; init; }
 
     public GenderTypeDto? Gender { get; init; }
 
-    public string ShortDescription { get; init; }
+    public string? ShortDescription { get; init; }
 
+    [UsedImplicitly]
     public class UpdateMeetingCommandHandler : IRequestHandler<UpdateMeetingCommand>
     {
         private readonly IVMMDbContext _dbContext;
@@ -43,31 +45,29 @@ public class UpdateMeetingCommand : IRequest
 
         public async Task Handle(UpdateMeetingCommand request, CancellationToken cancellationToken)
         {
-            var meeting = await _dbContext.Meetings.FindAsync(request.id);
-            if (meeting is null)
-            {
-                throw new BadRequestException("Мероприятие не найдено");
-            }
+            var user = await _dbContext.Users
+                .FirstOrDefaultAsync(u => u.Id == _currentUser.Id, cancellationToken);
 
-            var user = await _dbContext.Users.FindAsync(_currentUser.Id);
+            EntityNotFoundException.ThrowIfNull(user, "Текущий пользователь не найден в системе");
+            
+            var meeting = await _dbContext.Meetings
+                .FirstOrDefaultAsync(m => m.Id == request.Id, cancellationToken);
+            
+            EntityNotFoundException.ThrowIfNull(meeting, "Не найдено мероприятие с Id={0}", request.Id);
 
-            if (meeting.Manager.Id != user.Id)
+            if (meeting.Manager.Id != user.Id && _currentUser.CanEditAllMeetings() is false)
             {
-                throw new BadRequestException("Пользователь не является организатором");
+                throw new ForbiddenException("Текущий пользователь не имеет прав на изменение данного мероприятия");
             }
 
             meeting.UpdateMeeting(request.Name,
                 request.Description,
                 request.StartDate,
                 request.EndDate,
-                request.ImageUrl,
                 request.MaxUsers,
                 request.MinAge,
                 (GenderType)request.Gender!,
                 request.ShortDescription);
-
-
-            _dbContext.Meetings.Update(meeting);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
         }

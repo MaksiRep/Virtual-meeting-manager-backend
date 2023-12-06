@@ -40,10 +40,7 @@ public class TokenService : ITokenService
         var rolesClaims = userRoles.Select(r => new Claim(InnerClaimTypes.UserRole, r));
         claims.AddRange(rolesClaims);
 
-        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.SecretKey!))
-        {
-            KeyId = _authSettings.SecretKey
-        };
+        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.SecretKey!));
 
         var jwt = new JwtSecurityToken(
             claims: claims,

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RU.NSU.FIT.VirtualManager.Domain.Constants;
+using RU.NSU.FIT.VirtualManager.Domain.Entities;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Configurations;
 

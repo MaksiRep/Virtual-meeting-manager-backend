@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RU.NSU.FIT.VirtualManager.Domain.Exceptions;
+﻿namespace RU.NSU.FIT.VirtualManager.Domain.Exceptions;
 
 public class BaseException : Exception
 {

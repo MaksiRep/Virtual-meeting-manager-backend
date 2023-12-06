@@ -28,8 +28,14 @@ public class User : IdentityUser<Guid>
     /// </summary>
     public DateOnly BirthDate { get; private set; }
     
+    /// <summary>
+    /// Пол
+    /// </summary>
     public GenderType Gender { get; private set; }
 
+    /// <summary>
+    /// Дата регистрации
+    /// </summary>
     public DateTime RegisteredOn { get; private set; }
 
     /// <summary>
@@ -59,8 +65,12 @@ public class User : IdentityUser<Guid>
     }
 
     public User(
-        string firstName, string lastName,
-        string email, DateOnly birthDate, DateTime registeredOn, GenderType gender)
+        string firstName, 
+        string lastName,
+        string email, 
+        DateOnly birthDate, 
+        DateTime registeredOn, 
+        GenderType gender)
     {
         FirstName = firstName;
         LastName = lastName;

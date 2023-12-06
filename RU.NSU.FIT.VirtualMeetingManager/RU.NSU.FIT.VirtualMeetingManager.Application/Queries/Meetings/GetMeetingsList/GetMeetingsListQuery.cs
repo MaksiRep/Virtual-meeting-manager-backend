@@ -52,6 +52,7 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
                     ImageUrl = m.ImageUrl,
                 })
                 .ToListAsync(cancellationToken);
+            
             return new GetMeetingsListResponse()
             {
                 Items = result,
