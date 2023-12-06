@@ -46,6 +46,11 @@ public class User : IdentityUser<Guid>
         RefreshTokens.Add(refreshToken);
     }
 
+    public void AddRole(Role role)
+    {
+        Roles.Add(role);
+    }
+    
     #region Constructors
 
     protected User()
@@ -55,14 +60,18 @@ public class User : IdentityUser<Guid>
 
     public User(
         string firstName, string lastName,
-        string email, DateOnly birthDate, DateTime registeredOn)
+        string email, DateOnly birthDate, DateTime registeredOn, GenderType gender)
     {
         FirstName = firstName;
         LastName = lastName;
         Email = email;
         BirthDate = birthDate;
         RegisteredOn = registeredOn;
+        Gender = gender;
     }
-
+    
+    
     #endregion
+    
+    
 }
