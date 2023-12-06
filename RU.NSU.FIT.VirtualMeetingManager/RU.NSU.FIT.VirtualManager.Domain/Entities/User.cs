@@ -60,16 +60,6 @@ public class User : IdentityUser<Guid>
 
     public User(
         string firstName, string lastName,
-        string email, DateOnly birthDate, DateTime registeredOn)
-    {
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-        BirthDate = birthDate;
-        RegisteredOn = registeredOn;
-    }
-    public User(
-        string firstName, string lastName,
         string email, DateOnly birthDate, DateTime registeredOn, GenderType gender)
     {
         FirstName = firstName;
@@ -79,6 +69,7 @@ public class User : IdentityUser<Guid>
         RegisteredOn = registeredOn;
         Gender = gender;
     }
+    
     
     #endregion
     

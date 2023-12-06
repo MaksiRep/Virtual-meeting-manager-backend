@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RU.NSU.FIT.VirtualManager.Domain.Auth;
 using RU.NSU.FIT.VirtualManager.Domain.Entities;
+using RU.NSU.FIT.VirtualManager.Domain.ValueTypes;
 
 namespace RU.NSU.FIT.VirtualMeetingManager;
 
@@ -21,7 +22,7 @@ public static class DataSeeder
 
         var admin = new User(
             "adminName", "lastName", "admin@test.test",
-            new DateOnly(2000, 1, 1), new DateTime(2020, 10, 10, 0, 0, 0, DateTimeKind.Utc))
+            new DateOnly(2000, 1, 1), new DateTime(2020, 10, 10, 0, 0, 0, DateTimeKind.Utc), GenderType.Female)
         {
             UserName = "admin@test.test",
             NormalizedUserName = "ADMIN@TEST.TEST",
@@ -32,7 +33,7 @@ public static class DataSeeder
 
         var user = new User(
             "userName", "lastName", "user@test.test",
-            new DateOnly(2000, 1, 1), new DateTime(2020, 10, 10, 0, 0, 0, DateTimeKind.Utc))
+            new DateOnly(2000, 1, 1), new DateTime(2020, 10, 10, 0, 0, 0, DateTimeKind.Utc), GenderType.Female)
         {
             UserName = "user@test.test",
             NormalizedUserName = "USER@TEST.TEST",
