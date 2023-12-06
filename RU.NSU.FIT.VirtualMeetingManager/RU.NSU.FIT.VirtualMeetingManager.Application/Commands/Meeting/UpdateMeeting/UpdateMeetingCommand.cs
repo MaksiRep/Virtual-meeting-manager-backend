@@ -1,11 +1,9 @@
 using MediatR;
 using RU.NSU.FIT.VirtualManager.Domain.Auth;
-using RU.NSU.FIT.VirtualManager.Domain.Entities;
 using RU.NSU.FIT.VirtualManager.Domain.Exceptions;
-using RU.NSU.FIT.VirtualManager.Domain.ValueTypes;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Services;
-using GenderType = RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base.GenderType;
-using GenderTypeDto = RU.NSU.FIT.VirtualManager.Domain.ValueTypes.GenderType;
+using GenderTypeDto = RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base.GenderType;
+using GenderType = RU.NSU.FIT.VirtualManager.Domain.ValueTypes.GenderType;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meeting.UpdateMeeting;
 
@@ -27,7 +25,7 @@ public class UpdateMeetingCommand : IRequest
 
     public int? MinAge { get; init; }
 
-    public GenderType? Gender { get; init; }
+    public GenderTypeDto? Gender { get; init; }
 
     public string ShortDescription { get; init; }
 
@@ -46,14 +44,14 @@ public class UpdateMeetingCommand : IRequest
         public async Task Handle(UpdateMeetingCommand request, CancellationToken cancellationToken)
         {
             var meeting = await _dbContext.Meetings.FindAsync(request.id);
-            if (meeting == null)
+            if (meeting is null)
             {
                 throw new BadRequestException("Мероприятие не найдено");
             }
 
             var user = await _dbContext.Users.FindAsync(_currentUser.Id);
 
-            if (meeting.Manager != user)
+            if (meeting.Manager.Id != user.Id)
             {
                 throw new BadRequestException("Пользователь не является организатором");
             }
@@ -65,7 +63,7 @@ public class UpdateMeetingCommand : IRequest
                 request.ImageUrl,
                 request.MaxUsers,
                 request.MinAge,
-                (GenderTypeDto)request.Gender!,
+                (GenderType)request.Gender!,
                 request.ShortDescription);
 
 
