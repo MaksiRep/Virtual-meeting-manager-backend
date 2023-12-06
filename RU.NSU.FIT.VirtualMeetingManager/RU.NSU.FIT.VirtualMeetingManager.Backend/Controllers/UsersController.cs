@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetCurrentUser;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUserInfo;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUsersList;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Backend.Controllers;
@@ -33,6 +34,15 @@ public class UsersController : ControllerBase
     /// </summary>
     [HttpPost("getUsersList")]
     public Task<GetUserListResponse> GetUsersList(GetUsersListQuery query)
+    {
+        return _mediator.Send(query, HttpContext.RequestAborted);
+    }
+
+    /// <summary>
+    /// Возвращает информацию по пользователю
+    /// </summary>
+    [HttpPost("getUserInfo")]
+    public Task<GetUserInfoResponse> GetUserInfo(GetUserInfoQuery query)
     {
         return _mediator.Send(query, HttpContext.RequestAborted);
     }
