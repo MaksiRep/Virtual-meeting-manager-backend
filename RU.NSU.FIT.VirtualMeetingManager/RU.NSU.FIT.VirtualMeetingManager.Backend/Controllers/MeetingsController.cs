@@ -1,12 +1,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.CancelMeetingVisiting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.CreateMeeting;
-using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.DeleteMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.UpdateMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.UpdateMeetingImage;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.VisitMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingImage;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingInfo;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingsList;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingUsers;
 
@@ -77,12 +79,29 @@ public class MeetingsController : ControllerBase
     }
     
     /// <summary>
-    /// Удаляет мероприятие
+    /// Добавляет пользователя в мероприятие
     /// </summary>
-    [HttpPost("deleteMeeting")]
-    public Task DeleteMeeting(DeleteMeetingCommand command)
+    [HttpPost("visitMeeting")]
+    public async Task VisitMeeting (VisitMeetingCommand command)
     {
-        return _mediator.Send(command, HttpContext.RequestAborted);
+        await _mediator.Send(command, HttpContext.RequestAborted);
     }
     
+    /// <summary>
+    /// Удаляет пользователя в мероприятие
+    /// </summary>
+    [HttpPost("cancelMeetingVisiting")]
+    public async Task CancelMeetingVisiting (CancelMeetingVisitingCommand command)
+    {
+        await _mediator.Send(command, HttpContext.RequestAborted);
+    }
+    
+    /// <summary>
+    /// Возвращает информацию о мероприятии
+    /// </summary>
+    [HttpPost("getCurrentMeeting")]
+    public Task<MeetingResponse> GetCurrentMeeting(GetMeetingInfoQuery query)
+    {
+        return _mediator.Send(query, HttpContext.RequestAborted);
+    }
 }

@@ -11,4 +11,6 @@ public record MeetingListItemDto
     public DateTime EndDate { get; set; }
 
     public string ImageUrl { get; set; }
+    
+    public bool IsUserVisitMeeting { get; set; }
 }
