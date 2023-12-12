@@ -37,7 +37,7 @@ public class CancelMeetingVisitingCommand : IRequest
 
             EntityNotFoundException.ThrowIfNull(meeting, "Не найдено мероприятие с Id={0}", request.MeetingId);
 
-            if (!meeting.Users.Contains(user))
+            if (meeting.Users.All(u => u.Id != user.Id))
             {
                 throw new BadRequestException("Текущий пользователь не является участником мероприятия");
             }

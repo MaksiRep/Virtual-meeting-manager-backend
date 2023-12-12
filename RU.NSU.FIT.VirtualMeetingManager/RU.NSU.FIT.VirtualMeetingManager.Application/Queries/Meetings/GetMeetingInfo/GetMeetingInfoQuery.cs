@@ -5,26 +5,26 @@ using RU.NSU.FIT.VirtualManager.Domain.Auth;
 using RU.NSU.FIT.VirtualManager.Domain.Exceptions;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Services;
 
-namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetCurrentMeeting;
+namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingInfo;
 
-public class GetCurrentMeetingQuery : IRequest<MeetingResponse>
+public class GetMeetingInfoQuery : IRequest<MeetingResponse>
 {
     public int MeetingId { get; init; }
 
     [UsedImplicitly]
-    public sealed class GetCurrentMeetingQueryHandler : IRequestHandler<GetCurrentMeetingQuery, MeetingResponse>
+    public sealed class GetMeetingInfoQueryHandler : IRequestHandler<GetMeetingInfoQuery, MeetingResponse>
     {
         private readonly IVMMDbContext _dbContext;
 
         private readonly ICurrentUser _currentUser;
 
-        public GetCurrentMeetingQueryHandler(IVMMDbContext dbContext, ICurrentUser currentUser)
+        public GetMeetingInfoQueryHandler(IVMMDbContext dbContext, ICurrentUser currentUser)
         {
             _dbContext = dbContext;
             _currentUser = currentUser;
         }
 
-        public async Task<MeetingResponse> Handle(GetCurrentMeetingQuery request, CancellationToken cancellationToken)
+        public async Task<MeetingResponse> Handle(GetMeetingInfoQuery request, CancellationToken cancellationToken)
         {
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(u => u.Id == _currentUser.Id, cancellationToken);
@@ -39,7 +39,7 @@ public class GetCurrentMeetingQuery : IRequest<MeetingResponse>
             
             var usersCount = meeting.Users.Count;
 
-            var isUserVisitMeeting = meeting.Users.Contains(user) || meeting.Manager.Id.Equals(user.Id);
+            var isUserVisitMeeting = meeting.Users.Any(u => u.Id == user.Id) || meeting.Manager.Id.Equals(user.Id);
             
             return new MeetingResponse
             {
@@ -48,7 +48,7 @@ public class GetCurrentMeetingQuery : IRequest<MeetingResponse>
                 Description = meeting.Description,
                 StartDate = meeting.StartDate,
                 EndDate = meeting.EndDate,
-                usersCount = usersCount,
+                UsersCount = usersCount,
                 ManagerEmail = meeting.Manager.Email,
                 ManagerId = meeting.Manager.Id,
                 IsUserVisitMeeting = isUserVisitMeeting

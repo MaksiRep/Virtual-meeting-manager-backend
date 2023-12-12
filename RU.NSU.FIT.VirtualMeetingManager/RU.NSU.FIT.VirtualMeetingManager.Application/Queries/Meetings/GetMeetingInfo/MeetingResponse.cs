@@ -1,4 +1,4 @@
-namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetCurrentMeeting;
+namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingInfo;
 
 public class MeetingResponse
 {
@@ -13,7 +13,7 @@ public class MeetingResponse
     
     public DateTime EndDate { get; init; }
     
-    public int usersCount { get; init; }
+    public int UsersCount { get; init; }
     
     public string ManagerEmail { get; init; }
     
