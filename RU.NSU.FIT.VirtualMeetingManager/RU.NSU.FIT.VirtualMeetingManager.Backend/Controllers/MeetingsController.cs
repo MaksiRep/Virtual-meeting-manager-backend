@@ -5,6 +5,7 @@ using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.CreateMeeti
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.UpdateMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.UpdateMeetingImage;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetCurrentMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingImage;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingsList;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingUsers;
@@ -71,6 +72,15 @@ public class MeetingsController : ControllerBase
     /// </summary>
     [HttpPost("getMeetingImage")]
     public Task<GetMeetingImageResponse> GetMeetingImage(GetMeetingImageQuery query)
+    {
+        return _mediator.Send(query, HttpContext.RequestAborted);
+    }
+    
+    /// <summary>
+    /// Возвращает информацию о мероприятии
+    /// </summary>
+    [HttpPost("getCurrentMeeting")]
+    public Task<MeetingResponse> GetMeetingImage(GetCurrentMeetingQuery query)
     {
         return _mediator.Send(query, HttpContext.RequestAborted);
     }
