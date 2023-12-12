@@ -8,6 +8,7 @@ using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.UpdateMeeti
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.VisitMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingImage;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingInfo;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingsList;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingUsers;
 
@@ -90,8 +91,17 @@ public class MeetingsController : ControllerBase
     /// Удаляет пользователя в мероприятие
     /// </summary>
     [HttpPost("cancelMeetingVisiting")]
-    public async Task CancelMeetingVisiting (CancelMeetingVisitingCommand visitingCommand)
+    public async Task CancelMeetingVisiting (CancelMeetingVisitingCommand command)
     {
-        await _mediator.Send(visitingCommand, HttpContext.RequestAborted);
+        await _mediator.Send(command, HttpContext.RequestAborted);
+    }
+    
+    /// <summary>
+    /// Возвращает информацию о мероприятии
+    /// </summary>
+    [HttpPost("getCurrentMeeting")]
+    public Task<MeetingResponse> GetCurrentMeeting(GetMeetingInfoQuery query)
+    {
+        return _mediator.Send(query, HttpContext.RequestAborted);
     }
 }

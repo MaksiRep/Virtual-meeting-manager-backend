@@ -38,7 +38,7 @@ public class VisitMeetingCommand : IRequest
             EntityNotFoundException.ThrowIfNull(meeting, "Не найдено мероприятие с Id={0}", request.MeetingId);
             
             
-            if (meeting.Users.Contains(user))
+            if (meeting.Users.Any(u => u.Id == user.Id))
             {
                return;
             }
