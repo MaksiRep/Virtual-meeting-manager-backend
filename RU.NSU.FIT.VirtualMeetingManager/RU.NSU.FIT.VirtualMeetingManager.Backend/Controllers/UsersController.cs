@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.PasswordChange;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetCurrentUser;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUserInfo;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUsersList;
@@ -45,5 +46,14 @@ public class UsersController : ControllerBase
     public Task<GetUserInfoResponse> GetUserInfo(GetUserInfoQuery query)
     {
         return _mediator.Send(query, HttpContext.RequestAborted);
+    }
+    
+    /// <summary>
+    /// Меняет пароль пользователя
+    /// </summary>
+    [HttpPost("changePassword")]
+    public Task ChangePassword(ChangePasswordCommand command)
+    {
+        return _mediator.Send(command, HttpContext.RequestAborted);
     }
 }

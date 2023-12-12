@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.CancelMeetingVisiting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.CreateMeeting;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.DeleteMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.UpdateMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.UpdateMeetingImage;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.VisitMeeting;
@@ -104,4 +105,14 @@ public class MeetingsController : ControllerBase
     {
         return _mediator.Send(query, HttpContext.RequestAborted);
     }
+    
+    /// <summary>
+    /// Удаляет мероприятие
+    /// </summary>
+    [HttpPost("deleteMeeting")]
+    public Task DeleteMeeting(DeleteMeetingCommand command)
+    {
+        return _mediator.Send(command, HttpContext.RequestAborted);
+    }
+    
 }
