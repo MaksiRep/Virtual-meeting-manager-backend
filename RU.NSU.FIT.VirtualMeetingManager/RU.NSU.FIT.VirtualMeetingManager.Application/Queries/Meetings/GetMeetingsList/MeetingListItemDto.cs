@@ -12,5 +12,5 @@ public record MeetingListItemDto
 
     public string ImageUrl { get; set; }
     
-    public bool isUserVisitMeeting { get; set; }
+    public bool IsUserVisitMeeting { get; set; }
 }

@@ -60,7 +60,7 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
                     StartDate = m.StartDate,
                     EndDate = m.EndDate,
                     ImageUrl = m.ImageUrl,
-                    isUserVisitMeeting = m.Users.Contains(user) || m.Manager.Id.Equals(user.Id)
+                    IsUserVisitMeeting = m.Users.Contains(user) || m.Manager.Id.Equals(user.Id)
                 })
                 .ToListAsync(cancellationToken);
 

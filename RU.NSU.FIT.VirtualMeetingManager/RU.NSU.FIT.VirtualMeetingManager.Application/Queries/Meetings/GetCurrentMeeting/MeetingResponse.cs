@@ -19,6 +19,6 @@ public class MeetingResponse
     
     public Guid ManagerId { get; init; }
     
-    public bool isUserVisitMeeting { get; init; }
+    public bool IsUserVisitMeeting { get; init; }
     
 }

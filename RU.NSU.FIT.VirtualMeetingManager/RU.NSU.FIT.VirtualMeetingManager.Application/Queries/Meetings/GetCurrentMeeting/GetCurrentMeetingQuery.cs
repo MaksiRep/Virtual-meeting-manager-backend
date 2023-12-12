@@ -51,7 +51,7 @@ public class GetCurrentMeetingQuery : IRequest<MeetingResponse>
                 usersCount = usersCount,
                 ManagerEmail = meeting.Manager.Email,
                 ManagerId = meeting.Manager.Id,
-                isUserVisitMeeting = isUserVisitMeeting
+                IsUserVisitMeeting = isUserVisitMeeting
             };
         }
     }
