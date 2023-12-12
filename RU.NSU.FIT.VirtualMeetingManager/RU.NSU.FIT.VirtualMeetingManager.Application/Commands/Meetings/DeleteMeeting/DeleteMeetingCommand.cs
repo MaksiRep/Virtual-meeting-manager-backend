@@ -31,6 +31,7 @@ public class DeleteMeetingCommand : IRequest
             EntityNotFoundException.ThrowIfNull(user, "Текущий пользователь не найден в системе");
             
             var meeting = await _dbContext.Meetings
+                .Include(m => m.Manager)
                 .FirstOrDefaultAsync(m => m.Id == request.MeetingId, cancellationToken);
             
             EntityNotFoundException.ThrowIfNull(meeting, "Не найдено мероприятие с Id={0}", request.MeetingId);

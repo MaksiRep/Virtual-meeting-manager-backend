@@ -1,9 +1,6 @@
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RU.NSU.FIT.VirtualManager.Domain.Auth;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.Base;
-using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.PasswordChange;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.RefreshToken;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.Registration;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.SignIn;
@@ -43,15 +40,6 @@ public class AuthController : Controller
     /// </summary>
     [HttpPost("registration")]
     public Task<AuthResponse> Registration(RegistrationCommand command)
-    {
-        return _mediator.Send(command, HttpContext.RequestAborted);
-    }
-    
-    /// <summary>
-    /// Меняет пароль пользователя
-    /// </summary>
-    [HttpPost("changePassword")]
-    public Task ChangePassword(ChangePasswordCommand command)
     {
         return _mediator.Send(command, HttpContext.RequestAborted);
     }
