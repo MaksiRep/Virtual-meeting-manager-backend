@@ -1,9 +1,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.CancelMeetingVisiting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.CreateMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.UpdateMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.UpdateMeetingImage;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.VisitMeeting;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingImage;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingsList;
@@ -73,5 +75,23 @@ public class MeetingsController : ControllerBase
     public Task<GetMeetingImageResponse> GetMeetingImage(GetMeetingImageQuery query)
     {
         return _mediator.Send(query, HttpContext.RequestAborted);
+    }
+    
+    /// <summary>
+    /// Добавляет пользователя в мероприятие
+    /// </summary>
+    [HttpPost("visitMeeting")]
+    public async Task VisitMeeting (VisitMeetingCommand command)
+    {
+        await _mediator.Send(command, HttpContext.RequestAborted);
+    }
+    
+    /// <summary>
+    /// Удаляет пользователя в мероприятие
+    /// </summary>
+    [HttpPost("cancelMeetingVisiting")]
+    public async Task CancelMeetingVisiting (CancelMeetingVisitingCommand visitingCommand)
+    {
+        await _mediator.Send(visitingCommand, HttpContext.RequestAborted);
     }
 }
