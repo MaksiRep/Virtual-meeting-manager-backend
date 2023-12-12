@@ -15,6 +15,11 @@ public static class AuthorizationExtensions
         return user.ContainRoles(RoleType.Admin, RoleType.MainAdmin);
     }
     
+    public static bool CanDeleteAllMeetings(this ICurrentUser user)
+    {
+        return user.ContainRoles(RoleType.Admin, RoleType.MainAdmin);
+    }
+    
     public static bool CanGetAllUsersDetails(this ICurrentUser user)
     {
         return user.ContainRoles(RoleType.Admin, RoleType.MainAdmin);
