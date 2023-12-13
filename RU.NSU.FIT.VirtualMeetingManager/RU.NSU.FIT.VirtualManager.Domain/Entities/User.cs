@@ -21,7 +21,12 @@ public class User : IdentityUser<Guid>
     /// <summary>
     /// Email
     /// </summary>
-    public override string Email { get; set; }
+    public sealed override string Email { get; set; }
+    
+    /// <summary>
+    /// Номер телефона
+    /// </summary>
+    public sealed override string? PhoneNumber { get; set; }
 
     /// <summary>
     /// Дата рождения
@@ -56,6 +61,20 @@ public class User : IdentityUser<Guid>
     {
         Roles.Add(role);
     }
+
+    public void UpdateUserInfo(
+        string firstName, 
+        string lastName,
+        DateOnly birthDate,
+        GenderType gender, 
+        string? phone = null)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        BirthDate = birthDate;
+        Gender = gender;
+        PhoneNumber = phone;
+    }
     
     #region Constructors
 
@@ -67,14 +86,16 @@ public class User : IdentityUser<Guid>
     public User(
         string firstName, 
         string lastName,
-        string email, 
+        string email,
         DateOnly birthDate, 
         DateTime registeredOn, 
-        GenderType gender)
+        GenderType gender,
+        string? phone = null)
     {
         FirstName = firstName;
         LastName = lastName;
         Email = email;
+        PhoneNumber = phone;
         BirthDate = birthDate;
         RegisteredOn = registeredOn;
         Gender = gender;

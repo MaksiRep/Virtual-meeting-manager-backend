@@ -7,12 +7,12 @@ using RU.NSU.FIT.VirtualMeetingManager.Application.Services;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingInfo;
 
-public class GetMeetingInfoQuery : IRequest<MeetingResponse>
+public class GetMeetingInfoQuery : IRequest<GetMeetingInfoResponse>
 {
     public int MeetingId { get; init; }
 
     [UsedImplicitly]
-    public sealed class GetMeetingInfoQueryHandler : IRequestHandler<GetMeetingInfoQuery, MeetingResponse>
+    public sealed class GetMeetingInfoQueryHandler : IRequestHandler<GetMeetingInfoQuery, GetMeetingInfoResponse>
     {
         private readonly IVMMDbContext _dbContext;
 
@@ -24,7 +24,7 @@ public class GetMeetingInfoQuery : IRequest<MeetingResponse>
             _currentUser = currentUser;
         }
 
-        public async Task<MeetingResponse> Handle(GetMeetingInfoQuery request, CancellationToken cancellationToken)
+        public async Task<GetMeetingInfoResponse> Handle(GetMeetingInfoQuery request, CancellationToken cancellationToken)
         {
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(u => u.Id == _currentUser.Id, cancellationToken);
@@ -41,7 +41,7 @@ public class GetMeetingInfoQuery : IRequest<MeetingResponse>
 
             var isUserVisitMeeting = meeting.Users.Any(u => u.Id == user.Id) || meeting.Manager.Id.Equals(user.Id);
             
-            return new MeetingResponse
+            return new GetMeetingInfoResponse
             {
                 Id = meeting.Id,
                 Name = meeting.Name,
@@ -49,7 +49,10 @@ public class GetMeetingInfoQuery : IRequest<MeetingResponse>
                 StartDate = meeting.StartDate,
                 EndDate = meeting.EndDate,
                 UsersCount = usersCount,
+                ManagerFirstName = meeting.Manager.FirstName,
+                ManagerLastName = meeting.Manager.LastName,
                 ManagerEmail = meeting.Manager.Email,
+                ManagerPhone = meeting.Manager.PhoneNumber,
                 ManagerId = meeting.Manager.Id,
                 IsUserVisitMeeting = isUserVisitMeeting
             };

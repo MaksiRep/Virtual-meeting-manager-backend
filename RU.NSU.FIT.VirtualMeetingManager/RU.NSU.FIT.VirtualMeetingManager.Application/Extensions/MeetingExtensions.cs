@@ -5,6 +5,13 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Application.Extensions;
 
 public static class MeetingExtensions
 {
+    public static IQueryable<Meeting> OrderByDefault(this IQueryable<Meeting> query)
+    {
+        return query
+            // TODO: сортировка списка мероприятий
+            .OrderBy(m => m.Id);
+    }
+    
     public static IQueryable<Meeting> FilterByDates(this IQueryable<Meeting> query, DateTime? startDate, DateTime? endDate)
     {
         if (startDate is not null)

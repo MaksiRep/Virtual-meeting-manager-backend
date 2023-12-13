@@ -2,15 +2,14 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeeti
 
 public record MeetingListItemDto
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public string Name { get; set; }
+    public string Name { get; init; }
 
-    public DateTime StartDate { get; set; }
+    public DateTime StartDate { get; init; }
     
-    public DateTime EndDate { get; set; }
-
-    public string ImageUrl { get; set; }
+    public DateTime EndDate { get; init; }
+    public string? ShortDescription { get; init; }
     
-    public bool IsUserVisitMeeting { get; set; }
+    public bool IsUserVisitMeeting { get; init; }
 }

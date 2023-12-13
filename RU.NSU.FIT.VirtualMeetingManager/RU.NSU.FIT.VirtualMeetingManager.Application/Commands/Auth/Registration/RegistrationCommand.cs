@@ -14,12 +14,13 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.Registratio
 
 public class RegistrationCommand : IRequest<AuthResponse>
 {
-    public string Email { get; set; }
-    public string Password { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public Queries.Base.GenderType Gender { get; set; }
-    public DateOnly BirthDate { get; set; }
+    public string Email { get; init; }
+    public string Password { get; init; }
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
+    public string? Phone { get; init; }
+    public Queries.Base.GenderType Gender { get; init; }
+    public DateOnly BirthDate { get; init; }
 
     [UsedImplicitly]
     public sealed class RegistrationCommandHandler : IRequestHandler<RegistrationCommand, AuthResponse>
@@ -62,7 +63,8 @@ public class RegistrationCommand : IRequest<AuthResponse>
                 request.Email,
                 request.BirthDate,
                 _dateTimeProvider.UtcNow,
-                (GenderType) request.Gender)
+                (GenderType) request.Gender,
+                request.Phone)
             {
                 UserName = request.Email
             };

@@ -29,6 +29,11 @@ public static class AuthorizationExtensions
     {
         return user.ContainRoles(RoleType.Admin, RoleType.MainAdmin);
     }
+    
+    public static bool CanEditAllUsersDetails(this ICurrentUser user)
+    {
+        return user.ContainRoles(RoleType.Admin, RoleType.MainAdmin);
+    }
 
     public static bool ContainRoles(this ICurrentUser currentUser, params RoleType[] roles)
     {

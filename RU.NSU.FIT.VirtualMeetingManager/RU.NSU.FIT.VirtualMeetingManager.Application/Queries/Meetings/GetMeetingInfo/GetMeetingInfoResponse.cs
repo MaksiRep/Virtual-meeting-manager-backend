@@ -1,6 +1,6 @@
 namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingInfo;
 
-public class MeetingResponse
+public class GetMeetingInfoResponse
 {
     
     public int Id { get; init; }
@@ -14,8 +14,11 @@ public class MeetingResponse
     public DateTime EndDate { get; init; }
     
     public int UsersCount { get; init; }
-    
+
+    public string ManagerFirstName { get; init; }
+    public string ManagerLastName { get; init; }
     public string ManagerEmail { get; init; }
+    public string? ManagerPhone { get; init; }
     
     public Guid ManagerId { get; init; }
     
