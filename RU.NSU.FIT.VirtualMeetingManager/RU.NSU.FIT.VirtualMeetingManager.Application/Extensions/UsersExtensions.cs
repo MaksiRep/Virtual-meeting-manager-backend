@@ -13,4 +13,13 @@ public static class UsersExtensions
 
         return query.Where(u => u.Email == email);
     }
+    
+    public static IQueryable<User> OrderByDefault(this IQueryable<User> query)
+    {
+        return query
+            .OrderBy(u => u.LastName)
+            .ThenBy(u => u.FirstName)
+            // .ThenByDescending(u => u.BirthDate)
+            .ThenBy(u => u.Id);
+    }
 }

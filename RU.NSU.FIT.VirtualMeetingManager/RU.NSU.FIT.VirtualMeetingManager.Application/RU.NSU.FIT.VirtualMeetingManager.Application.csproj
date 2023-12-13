@@ -21,6 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Queries\Statistic\" />
       <Folder Include="Queries\Users\Base" />
     </ItemGroup>
 

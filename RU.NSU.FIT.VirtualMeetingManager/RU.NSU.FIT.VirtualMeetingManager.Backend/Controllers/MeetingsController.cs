@@ -49,16 +49,17 @@ public class MeetingsController : ControllerBase
     /// Создает новое мероприятие
     /// </summary>
     [HttpPost("createMeeting")]
-    public async Task<CreateMeetingResponse> CreateMeeting(CreateMeetingCommand command){
-        return await _mediator.Send(command, HttpContext.RequestAborted);
+    public Task<CreateMeetingResponse> CreateMeeting(CreateMeetingCommand command){
+        return _mediator.Send(command, HttpContext.RequestAborted);
     }
     
     /// <summary>
     /// Редактирует мероприятие
     /// </summary>
     [HttpPost("updateMeeting")]
-    public async Task UpdateMeeting(UpdateMeetingCommand command){
-        await _mediator.Send(command, HttpContext.RequestAborted);
+    public Task UpdateMeeting(UpdateMeetingCommand command)
+    {
+        return _mediator.Send(command, HttpContext.RequestAborted);
     }
     
     /// <summary>
@@ -83,25 +84,25 @@ public class MeetingsController : ControllerBase
     /// Добавляет пользователя в мероприятие
     /// </summary>
     [HttpPost("visitMeeting")]
-    public async Task VisitMeeting (VisitMeetingCommand command)
+    public Task VisitMeeting (VisitMeetingCommand command)
     {
-        await _mediator.Send(command, HttpContext.RequestAborted);
+        return _mediator.Send(command, HttpContext.RequestAborted);
     }
     
     /// <summary>
     /// Удаляет пользователя в мероприятие
     /// </summary>
     [HttpPost("cancelMeetingVisiting")]
-    public async Task CancelMeetingVisiting (CancelMeetingVisitingCommand command)
+    public Task CancelMeetingVisiting (CancelMeetingVisitingCommand command)
     {
-        await _mediator.Send(command, HttpContext.RequestAborted);
+        return _mediator.Send(command, HttpContext.RequestAborted);
     }
     
     /// <summary>
     /// Возвращает информацию о мероприятии
     /// </summary>
-    [HttpPost("getCurrentMeeting")]
-    public Task<MeetingResponse> GetCurrentMeeting(GetMeetingInfoQuery query)
+    [HttpPost("getMeetingInfo")]
+    public Task<GetMeetingInfoResponse> GetMeetingInfo(GetMeetingInfoQuery query)
     {
         return _mediator.Send(query, HttpContext.RequestAborted);
     }
@@ -114,5 +115,4 @@ public class MeetingsController : ControllerBase
     {
         return _mediator.Send(command, HttpContext.RequestAborted);
     }
-    
 }

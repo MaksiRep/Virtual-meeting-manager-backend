@@ -5,6 +5,6 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUsersLis
 
 public class GetUserListResponse : IPagedListResponse<UserDto>
 {
-    public IList<UserDto> Items { get; init; }
+    public IList<UserDto> Items { get; init; } = Array.Empty<UserDto>();
     public int TotalCount { get; init; }
 }

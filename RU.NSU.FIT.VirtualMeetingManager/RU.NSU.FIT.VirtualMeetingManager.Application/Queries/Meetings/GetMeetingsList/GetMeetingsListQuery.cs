@@ -28,29 +28,29 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
     {
         private readonly IVMMDbContext _dbContext;
 
-        private readonly ICurrentUser _CurrentUser;
+        private readonly ICurrentUser _currentUser;
 
         public GetMeetingsListQueryHandler(IVMMDbContext dbContext, ICurrentUser currentUser)
         {
             _dbContext = dbContext;
-            _CurrentUser = currentUser;
+            _currentUser = currentUser;
         }
 
         public async Task<GetMeetingsListResponse> Handle(GetMeetingsListQuery request,
             CancellationToken cancellationToken)
         {
             var user = await _dbContext.Users
-                .FirstOrDefaultAsync(u => u.Id == _CurrentUser.Id, cancellationToken);
+                .FirstOrDefaultAsync(u => u.Id == _currentUser.Id, cancellationToken);
             EntityNotFoundException.ThrowIfNull(user, "Текущий пользователь не найден в системе");
 
             var query = _dbContext.Meetings
-                .Include(m => m.Users)
                 .FilterByMinAge(request.MinAge)
                 .FilterByDates(request.StartDate, request.EndDate)
                 .FilterByGender(request.GenderType);
 
             var totalCount = await query.CountAsync(cancellationToken);
             var result = await query
+                .OrderByDefault()
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(m => new MeetingListItemDto
@@ -59,7 +59,7 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
                     Name = m.Name,
                     StartDate = m.StartDate,
                     EndDate = m.EndDate,
-                    ImageUrl = m.ImageUrl,
+                    ShortDescription = m.ShortDescription,
                     IsUserVisitMeeting = m.Users.Any(u => u.Id == user.Id) || m.Manager.Id.Equals(user.Id)
                 })
                 .ToListAsync(cancellationToken);

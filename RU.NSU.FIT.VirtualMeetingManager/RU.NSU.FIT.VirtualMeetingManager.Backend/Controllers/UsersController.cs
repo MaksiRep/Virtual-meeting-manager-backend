@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Auth.PasswordChange;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Users.UpdateUserInfo;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetCurrentUser;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUserInfo;
-using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUsersCount;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Users.GetUsersList;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Backend.Controllers;
@@ -39,15 +39,6 @@ public class UsersController : ControllerBase
     {
         return _mediator.Send(query, HttpContext.RequestAborted);
     }
-    
-    /// <summary>
-    /// Возврщает количество всех пользователей системы
-    /// </summary>
-    [HttpPost("getUsersCount")]
-    public Task<UsersCountDto> GetUsersCount(GetUsersCountQuery query)
-    {
-        return _mediator.Send(new GetUsersCountQuery(), HttpContext.RequestAborted);
-    }
 
     /// <summary>
     /// Возвращает информацию по пользователю
@@ -63,6 +54,15 @@ public class UsersController : ControllerBase
     /// </summary>
     [HttpPost("changePassword")]
     public Task ChangePassword(ChangePasswordCommand command)
+    {
+        return _mediator.Send(command, HttpContext.RequestAborted);
+    }
+
+    /// <summary>
+    /// Редактирует данные пользователя
+    /// </summary>
+    [HttpPost("updateUserInfo")]
+    public Task UpdateUserInfo(UpdateUserInfoCommand command)
     {
         return _mediator.Send(command, HttpContext.RequestAborted);
     }
