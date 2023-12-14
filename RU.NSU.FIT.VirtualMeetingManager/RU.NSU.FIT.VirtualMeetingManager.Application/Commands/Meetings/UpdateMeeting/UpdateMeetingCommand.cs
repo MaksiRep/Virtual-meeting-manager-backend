@@ -66,7 +66,7 @@ public class UpdateMeetingCommand : IRequest
                 request.EndDate,
                 request.MaxUsers,
                 request.MinAge,
-                (GenderType)request.Gender!,
+                (GenderType?)request.Gender,
                 request.ShortDescription);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
