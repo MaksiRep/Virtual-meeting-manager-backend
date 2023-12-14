@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RU.NSU.FIT.VirtualManager.Domain.Auth;
 using RU.NSU.FIT.VirtualManager.Domain.Exceptions;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Services;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingInfo;
@@ -54,7 +55,10 @@ public class GetMeetingInfoQuery : IRequest<GetMeetingInfoResponse>
                 ManagerEmail = meeting.Manager.Email,
                 ManagerPhone = meeting.Manager.PhoneNumber,
                 ManagerId = meeting.Manager.Id,
-                IsUserVisitMeeting = isUserVisitMeeting
+                IsUserVisitMeeting = isUserVisitMeeting,
+                MaxUsers = meeting.MaxUsers,
+                MinAge = meeting.MinAge,
+                Gender = (GenderType?) meeting.Gender
             };
         }
     }
