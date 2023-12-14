@@ -1,3 +1,5 @@
+using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
+
 namespace RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Meetings.GetMeetingInfo;
 
 public class GetMeetingInfoResponse
@@ -24,4 +26,9 @@ public class GetMeetingInfoResponse
     
     public bool IsUserVisitMeeting { get; init; }
     
+    public int? MaxUsers { get; init; }
+    
+    public int? MinAge { get; init; }
+    
+    public GenderType? Gender { get; init; }
 }
