@@ -35,6 +35,7 @@ public record GetUserInfoQuery : IRequest<GetUserInfoResponse>
             
             var user = await _vmmDbContext.Users
                 .AsNoTracking()
+                .Include(u => u.Roles)
                 .FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
 
             EntityNotFoundException.ThrowIfNull(user, "Не найден юзер с Id={0}", request.UserId);
