@@ -10,7 +10,7 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = $"{RoleConstants.Admin}")]
+[Authorize(Roles = $"{RoleConstants.MainAdmin}")]
 public class AdminController : ControllerBase
 {
     private readonly IMediator _mediator;
