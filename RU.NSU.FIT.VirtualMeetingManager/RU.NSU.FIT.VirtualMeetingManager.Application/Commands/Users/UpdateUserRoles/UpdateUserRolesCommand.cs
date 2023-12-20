@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RU.NSU.FIT.VirtualManager.Domain.Auth;
 using RU.NSU.FIT.VirtualManager.Domain.Exceptions;
+using RU.NSU.FIT.VirtualManager.Domain.ValueTypes;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Extensions;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Services;
 
@@ -35,22 +36,8 @@ public record UpdateUserRolesCommand : IRequest
                     "Текущий пользователь не имеет прав на изменение ролей пользователей");
             }
 
-            var dbRolesIds = await _dbContext.Roles
-                .Select(r => r.Id)
-                .ToListAsync(cancellationToken);
-
-            var excDB = request.RolesIds
-                .Except(dbRolesIds);
-
-            EntityNotFoundException.ThrowIfAny(excDB, "В системе отсутствуют роли с Id={0}", excDB);
-
-            var excRead = request.RolesIds
-                .Except(dbRolesIds);
-
-            EntityNotFoundException.ThrowIfAny(excRead,
-                "При считывании списка новых ролей пользователя произошла ошибка", excRead);
-
             var user = await _dbContext.Users
+                .Include(u => u.Roles)
                 .FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
 
             EntityNotFoundException.ThrowIfNull(user, "В системе отсутствует пользователь с Id={0}", request.UserId);
@@ -59,10 +46,17 @@ public record UpdateUserRolesCommand : IRequest
                 .Where(r => request.RolesIds.Contains(r.Id))
                 .ToListAsync(cancellationToken);
 
-            if (roles.Exists(r => r.Name == RoleConstants.Admin) is false && user.Id == _currentUser.Id)
+            var notFoundRolesIds = request.RolesIds
+                .Except(roles.Select(r => r.Id))
+                .ToList();
+
+            EntityNotFoundException.ThrowIfAny(notFoundRolesIds, "В системе отсутствуют роли с Id={0}",
+                string.Join(", ", notFoundRolesIds.Select(id => id.ToString())));
+
+            if (user.Id == _currentUser.Id && roles.Exists(r => r.Type == RoleType.MainAdmin) is false)
             {
-                throw new ForbiddenException(
-                    "Текущий пользователь не имеет прав на изменение ролей данного пользователя");
+                throw new BadRequestException(
+                    "Текущий пользователь не может снять с себя права Главного Администратора");
             }
 
             user.UpdateUserRoles(roles);
