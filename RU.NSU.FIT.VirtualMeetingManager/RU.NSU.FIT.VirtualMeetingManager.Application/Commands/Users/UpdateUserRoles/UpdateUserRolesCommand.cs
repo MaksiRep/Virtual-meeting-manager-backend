@@ -35,17 +35,20 @@ public record UpdateUserRolesCommand : IRequest
                     "Текущий пользователь не имеет прав на изменение ролей пользователей");
             }
 
-            var rolesIds = _dbContext.Roles
+            var dbRolesIds = await _dbContext.Roles
                 .Select(r => r.Id)
-                .Except(request.RolesIds);
+                .ToListAsync(cancellationToken);
 
-            EntityNotFoundException.ThrowIfNull(rolesIds, "В системе отсутствуют роли с Id={0}", rolesIds);
+            var excDB = request.RolesIds
+                .Except(dbRolesIds);
 
-            if (rolesIds != null && rolesIds.Except(request.RolesIds) is not null)
-            {
-                throw new ForbiddenException(
-                    "При считывании списка новых ролей пользователя произошла ошибка");
-            }
+            EntityNotFoundException.ThrowIfAny(excDB, "В системе отсутствуют роли с Id={0}", excDB);
+
+            var excRead = request.RolesIds
+                .Except(dbRolesIds);
+
+            EntityNotFoundException.ThrowIfAny(excRead,
+                "При считывании списка новых ролей пользователя произошла ошибка", excRead);
 
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(u => u.Id == request.UserId, cancellationToken);
@@ -56,7 +59,7 @@ public record UpdateUserRolesCommand : IRequest
                 .Where(r => request.RolesIds.Contains(r.Id))
                 .ToListAsync(cancellationToken);
 
-            if (roles.Exists(r => r.Name == RoleConstants.MainAdmin) is false && user.Id == _currentUser.Id)
+            if (roles.Exists(r => r.Name == RoleConstants.Admin) is false && user.Id == _currentUser.Id)
             {
                 throw new ForbiddenException(
                     "Текущий пользователь не имеет прав на изменение ролей данного пользователя");
