@@ -22,7 +22,7 @@ public class User : IdentityUser<Guid>
     /// Email
     /// </summary>
     public sealed override string Email { get; set; }
-    
+
     /// <summary>
     /// Номер телефона
     /// </summary>
@@ -32,7 +32,7 @@ public class User : IdentityUser<Guid>
     /// Дата рождения
     /// </summary>
     public DateOnly BirthDate { get; private set; }
-    
+
     /// <summary>
     /// Пол
     /// </summary>
@@ -47,9 +47,9 @@ public class User : IdentityUser<Guid>
     /// Роли пользователя
     /// </summary>
     public IList<Role> Roles { get; private set; } = new List<Role>();
-    
+
     public IList<Meeting> Meetings { get; private set; } = new List<Meeting>();
-    
+
     public IList<RefreshToken> RefreshTokens { get; private set; } = new List<RefreshToken>();
 
     public void AddRefreshToken(RefreshToken refreshToken)
@@ -63,10 +63,10 @@ public class User : IdentityUser<Guid>
     }
 
     public void UpdateUserInfo(
-        string firstName, 
+        string firstName,
         string lastName,
         DateOnly birthDate,
-        GenderType gender, 
+        GenderType gender,
         string? phone = null)
     {
         FirstName = firstName;
@@ -75,7 +75,12 @@ public class User : IdentityUser<Guid>
         Gender = gender;
         PhoneNumber = phone;
     }
-    
+
+    public void UpdateUserRoles(IList<Role> roles)
+    {
+        Roles = roles;
+    }
+
     #region Constructors
 
     protected User()
@@ -84,11 +89,11 @@ public class User : IdentityUser<Guid>
     }
 
     public User(
-        string firstName, 
+        string firstName,
         string lastName,
         string email,
-        DateOnly birthDate, 
-        DateTime registeredOn, 
+        DateOnly birthDate,
+        DateTime registeredOn,
         GenderType gender,
         string? phone = null)
     {
@@ -100,9 +105,6 @@ public class User : IdentityUser<Guid>
         RegisteredOn = registeredOn;
         Gender = gender;
     }
-    
-    
+
     #endregion
-    
-    
 }
