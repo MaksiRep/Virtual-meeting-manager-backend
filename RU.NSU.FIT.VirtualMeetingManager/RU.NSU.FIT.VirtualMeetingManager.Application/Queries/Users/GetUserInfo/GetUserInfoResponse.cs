@@ -20,6 +20,11 @@ public record GetUserInfoResponse
     /// Email
     /// </summary>
     public string Email { get; init; }
+    
+    /// <summary>
+    /// Телефон
+    /// </summary>
+    public string? Phone { get; init; }
 
     /// <summary>
     /// Дата рождения

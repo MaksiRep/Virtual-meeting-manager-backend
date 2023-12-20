@@ -11,6 +11,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.ToTable("Users");
 
         builder.HasKey(u => u.Id);
+        
+        builder.Property(u => u.Email)
+            .HasMaxLength()
 
         builder.HasMany(u => u.RefreshTokens)
             .WithOne(r => r.Owner);

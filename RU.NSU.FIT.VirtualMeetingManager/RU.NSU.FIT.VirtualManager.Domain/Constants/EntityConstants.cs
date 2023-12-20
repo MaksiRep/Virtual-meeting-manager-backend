@@ -1,8 +1,21 @@
 namespace RU.NSU.FIT.VirtualManager.Domain.Constants;
 
-public class EntityConstants
+public static class EntityConstants
 {
-    public static readonly int MAX_MEETING_DESCRIPTION_SIZE = 1024;
-    public static readonly int MAX_MEETING_NAME_SIZE = 128;
-    public static readonly int MAX_SHORT_DESCRIPTION_SIZE = 300;
+    public static class Meeting
+    {
+        public static readonly Size Name = new(3, 128);
+        public static readonly Size Description = new(10, 1024);
+        public static readonly Size ShortDescription = new(1, 300);
+    }
+    
+    public static class User
+    {
+        public static readonly Size Email = new()
+    }
+
+    public record Size(int Min, int Max)
+    {
+        public Size(int exact) : this(exact, exact) {}
+    }
 }
