@@ -39,14 +39,25 @@ public static class MeetingExtensions
         return query.Where(m => m.Gender == dbType);
     }
     
-    public static IQueryable<Meeting> FilterByMinAge(this IQueryable<Meeting> query, int? minAge)
+    public static IQueryable<Meeting> FilterByMinAge(this IQueryable<Meeting> query, User user, int? minAge)
     {
         if (minAge is null)
         {
             return query;
         }
         
-        return query.Where(m => m.MinAge >= minAge);
+        var userAge = DateOnly.FromDateTime(DateTime.Now).Year - user.BirthDate.Year;
+        
+        return query.Where(m => m.MinAge >= minAge && m.MinAge <= userAge);
+    }
+
+    public static IQueryable<Meeting> FilterByName(this IQueryable<Meeting> query, string? name)
+    {
+        if (name is null)
+        {
+            return query;
+        }
+        return query.Where(m => m.Name.Contains(name));
     }
     
     public static IQueryable<Meeting> FilterById(this IQueryable<Meeting> query, int? meetingId)

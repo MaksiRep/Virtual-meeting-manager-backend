@@ -23,6 +23,8 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
 
     public GenderType? GenderType { get; init; }
 
+    public string? FindByNameValue { get; init; }
+    
     [UsedImplicitly]
     public class GetMeetingsListQueryHandler : IRequestHandler<GetMeetingsListQuery, GetMeetingsListResponse>
     {
@@ -44,7 +46,8 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
             EntityNotFoundException.ThrowIfNull(user, "Текущий пользователь не найден в системе");
 
             var query = _dbContext.Meetings
-                .FilterByMinAge(request.MinAge)
+                .FilterByName(request.FindByNameValue)
+                .FilterByMinAge(user, request.MinAge)
                 .FilterByDates(request.StartDate, request.EndDate)
                 .FilterByGender(request.GenderType);
 
