@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using RU.NSU.FIT.VirtualManager.Domain;
 using RU.NSU.FIT.VirtualManager.Domain.Auth;
 using RU.NSU.FIT.VirtualManager.Domain.Exceptions;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Common.Pagination;
@@ -23,6 +24,8 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
 
     public GenderType? GenderType { get; init; }
 
+    public string? NameTerm { get; init; }
+    
     [UsedImplicitly]
     public class GetMeetingsListQueryHandler : IRequestHandler<GetMeetingsListQuery, GetMeetingsListResponse>
     {
@@ -30,10 +33,13 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
 
         private readonly ICurrentUser _currentUser;
 
-        public GetMeetingsListQueryHandler(IVMMDbContext dbContext, ICurrentUser currentUser)
+        private readonly IDateTimeProvider _dateTimeProvider; 
+
+        public GetMeetingsListQueryHandler(IVMMDbContext dbContext, ICurrentUser currentUser, IDateTimeProvider dateTimeProvider)
         {
             _dbContext = dbContext;
             _currentUser = currentUser;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<GetMeetingsListResponse> Handle(GetMeetingsListQuery request,
@@ -42,9 +48,11 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(u => u.Id == _currentUser.Id, cancellationToken);
             EntityNotFoundException.ThrowIfNull(user, "Текущий пользователь не найден в системе");
-
+            var userAge = GetUserAge(user.BirthDate, DateOnly.FromDateTime(_dateTimeProvider.UtcNow));
             var query = _dbContext.Meetings
+                .FilterByName(request.NameTerm)
                 .FilterByMinAge(request.MinAge)
+                .FilterByUserAge(userAge)
                 .FilterByDates(request.StartDate, request.EndDate)
                 .FilterByGender(request.GenderType);
 
@@ -69,6 +77,16 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
                 Items = result,
                 TotalCount = totalCount
             };
+        }
+
+        private static int GetUserAge(DateOnly userBirthDate, DateOnly now)
+        {
+            var age = now.Year - userBirthDate.Year;
+            if (userBirthDate > now.AddYears(-age))
+            {
+                age--;
+            }
+            return age;
         }
     }
 }
