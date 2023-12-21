@@ -10,6 +10,7 @@ public static class AuthExtensions
         {
             RoleConstants.User => RoleType.User,
             RoleConstants.Admin => RoleType.Admin,
+            RoleConstants.MainAdmin => RoleType.MainAdmin,
             _ => RoleType.Undefined
         };
     }
@@ -20,6 +21,7 @@ public static class AuthExtensions
         {
             RoleType.User => RoleConstants.User,
             RoleType.Admin => RoleConstants.Admin,
+            RoleType.MainAdmin => RoleConstants.MainAdmin,
             _ => null
         };
     }
