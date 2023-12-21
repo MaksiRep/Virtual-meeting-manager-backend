@@ -46,6 +46,7 @@ public record GetUserInfoQuery : IRequest<GetUserInfoResponse>
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
+                Phone = user.PhoneNumber,
                 BirthDate = user.BirthDate,
                 Gender = (GenderType) user.Gender,
                 RegisteredOn = user.RegisteredOn,

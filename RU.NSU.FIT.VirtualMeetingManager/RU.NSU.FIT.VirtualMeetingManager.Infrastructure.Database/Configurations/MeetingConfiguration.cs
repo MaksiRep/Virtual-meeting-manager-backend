@@ -20,12 +20,12 @@ public class MeetingConfiguration : IEntityTypeConfiguration<Meeting>
             .WithMany();
         builder
             .Property(m => m.Name)
-            .HasMaxLength(EntityConstants.MAX_MEETING_NAME_SIZE);
+            .HasMaxLength(EntityConstants.Meeting.Name.Max);
         builder
             .Property(m => m.Description)
-            .HasMaxLength(EntityConstants.MAX_MEETING_DESCRIPTION_SIZE);
+            .HasMaxLength(EntityConstants.Meeting.Description.Max);
         builder
             .Property(m => m.ShortDescription)
-            .HasMaxLength(EntityConstants.MAX_SHORT_DESCRIPTION_SIZE);
+            .HasMaxLength(EntityConstants.Meeting.ShortDescription.Max);
     }
 }

@@ -3,13 +3,14 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RU.NSU.FIT.VirtualManager.Domain.Auth;
 using RU.NSU.FIT.VirtualManager.Domain.Exceptions;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Base.EditUserCommand;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Extensions;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Services;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Users.UpdateUserInfo;
 
-public class UpdateUserInfoCommand : IRequest
+public class UpdateUserInfoCommand : IRequest, IEditUserCommand
 {
     public Guid UserId { get; init; }
 
@@ -26,10 +27,16 @@ public class UpdateUserInfoCommand : IRequest
 
         private readonly ICurrentUser _currentUser;
 
-        public UpdateUserInfoCommandHandler(IVMMDbContext dbContext, ICurrentUser currentUser)
+        private readonly EditUserCommandValidator _commandValidator;
+
+        public UpdateUserInfoCommandHandler(
+            IVMMDbContext dbContext,
+            ICurrentUser currentUser, 
+            EditUserCommandValidator commandValidator)
         {
             _dbContext = dbContext;
             _currentUser = currentUser;
+            _commandValidator = commandValidator;
         }
 
         public async Task Handle(UpdateUserInfoCommand request, CancellationToken cancellationToken)
@@ -43,6 +50,9 @@ public class UpdateUserInfoCommand : IRequest
             {
                 throw new ForbiddenException("Текущий пользователь не имеет прав на изменение данных данного пользователя");
             }
+            
+            // Проверяем команду
+            _commandValidator.ValidateAndThrow(request);
             
             user.UpdateUserInfo(
                 request.FirstName,
