@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using RU.NSU.FIT.VirtualManager.Domain.Auth;
 using RU.NSU.FIT.VirtualManager.Domain.Exceptions;
+using RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.Base;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Extensions;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Services;
 using GenderTypeDto = RU.NSU.FIT.VirtualMeetingManager.Application.Queries.Base.GenderType;
@@ -10,7 +11,7 @@ using GenderType = RU.NSU.FIT.VirtualManager.Domain.ValueTypes.GenderType;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Application.Commands.Meetings.UpdateMeeting;
 
-public class UpdateMeetingCommand : IRequest
+public class UpdateMeetingCommand : IRequest, IEditMeetingCommand
 {
     public int Id { get; init; }
 
@@ -37,10 +38,16 @@ public class UpdateMeetingCommand : IRequest
 
         private readonly ICurrentUser _currentUser;
 
-        public UpdateMeetingCommandHandler(IVMMDbContext dbContext, ICurrentUser currentUser)
+        private readonly EditMeetingCommandValidator _commandValidator;
+
+        public UpdateMeetingCommandHandler(
+            IVMMDbContext dbContext, 
+            ICurrentUser currentUser,
+            EditMeetingCommandValidator commandValidator)
         {
             _dbContext = dbContext;
             _currentUser = currentUser;
+            _commandValidator = commandValidator;
         }
 
         public async Task Handle(UpdateMeetingCommand request, CancellationToken cancellationToken)
@@ -59,6 +66,9 @@ public class UpdateMeetingCommand : IRequest
             {
                 throw new ForbiddenException("Текущий пользователь не имеет прав на изменение данного мероприятия");
             }
+            
+            // Проверяем команду
+            _commandValidator.ValidateAndThrow(request);
 
             meeting.UpdateMeeting(request.Name,
                 request.Description,

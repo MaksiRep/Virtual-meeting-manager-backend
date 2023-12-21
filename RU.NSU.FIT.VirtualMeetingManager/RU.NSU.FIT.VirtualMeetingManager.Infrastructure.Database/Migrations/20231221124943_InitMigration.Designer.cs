@@ -12,8 +12,8 @@ using RU.NSU.FIT.VirtualMeetingManager;
 namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
 {
     [DbContext(typeof(VMMDbContext))]
-    [Migration("20231121161008_addGenderTypeMeeting")]
-    partial class addGenderTypeMeeting
+    [Migration("20231221124943_InitMigration")]
+    partial class InitMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,26 +138,29 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("integer");
+                    b.Property<byte?>("Gender")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Guid>("ManagerId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("MaxUsers")
+                    b.Property<int?>("MaxUsers")
                         .HasColumnType("integer");
 
-                    b.Property<int>("MinAge")
+                    b.Property<int?>("MinAge")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
+
+                    b.Property<string>("ShortDescription")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
@@ -213,6 +216,12 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                     b.HasData(
                         new
                         {
+                            Id = new Guid("4b110a01-7935-483a-b127-1646acc211c7"),
+                            Name = "MainAdmin",
+                            NormalizedName = "MAINADMIN"
+                        },
+                        new
+                        {
                             Id = new Guid("ff3405f7-9a3b-46d3-83d6-e2e3a147f8be"),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -242,18 +251,24 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<byte>("Gender")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
@@ -271,7 +286,8 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
@@ -295,20 +311,41 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                     b.HasData(
                         new
                         {
+                            Id = new Guid("630b2bdc-abd2-44eb-9b16-30025d98202e"),
+                            AccessFailedCount = 0,
+                            BirthDate = new DateOnly(2000, 1, 1),
+                            ConcurrencyStamp = "5730f234-901e-4fe8-b1c4-02676a138535",
+                            Email = "main@test.test",
+                            EmailConfirmed = false,
+                            FirstName = "mainAdminName",
+                            Gender = (byte)2,
+                            LastName = "lastName",
+                            LockoutEnabled = false,
+                            NormalizedUserName = "MAIN@TEST.TEST",
+                            PasswordHash = "AQAAAAIAAYagAAAAEP9o2+DxNCEYAQ8v4blIE5HC8Mv6wkjwxtTrvLFhu2dVycSdXLHv1dIH7k/hkPVsDw==",
+                            PhoneNumberConfirmed = false,
+                            RegisteredOn = new DateTime(2020, 10, 10, 0, 0, 0, 0, DateTimeKind.Utc),
+                            SecurityStamp = "9823af76-57b6-437e-b09d-bdcce45cd2b2",
+                            TwoFactorEnabled = false,
+                            UserName = "main@test.test"
+                        },
+                        new
+                        {
                             Id = new Guid("0eddcd7a-b582-4637-ba9c-b1ed69cc361a"),
                             AccessFailedCount = 0,
                             BirthDate = new DateOnly(2000, 1, 1),
-                            ConcurrencyStamp = "69bd6e62-3003-48f7-b28f-ff28f2e1c226",
+                            ConcurrencyStamp = "c93100a0-ae44-45cb-b3c2-42c78cf863bc",
                             Email = "admin@test.test",
                             EmailConfirmed = false,
                             FirstName = "adminName",
+                            Gender = (byte)2,
                             LastName = "lastName",
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@TEST.TEST",
-                            PasswordHash = "AQAAAAIAAYagAAAAELcdhTLqSZKNZbdbbPPKKN/PfpAn4ud/o2qY7pW95iENzEs3TdBlR+IdLtsr1eT7jQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHxXBdwELduSm92SX0KF8LxmXPG0YhZmaf9KUm4SleDuKKNphqzDAtf7dICBYSomsQ==",
                             PhoneNumberConfirmed = false,
                             RegisteredOn = new DateTime(2020, 10, 10, 0, 0, 0, 0, DateTimeKind.Utc),
-                            SecurityStamp = "3b209f4e-970d-438b-a8e3-a214894938d6",
+                            SecurityStamp = "e4bc5d91-6795-4d81-b2e5-89fb961fc8b8",
                             TwoFactorEnabled = false,
                             UserName = "admin@test.test"
                         },
@@ -317,17 +354,18 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                             Id = new Guid("70f36e69-f7b9-42fc-9e77-a59f3fd9bfac"),
                             AccessFailedCount = 0,
                             BirthDate = new DateOnly(2000, 1, 1),
-                            ConcurrencyStamp = "5fd383ac-5f68-4397-9d74-8f2b02ba5de3",
+                            ConcurrencyStamp = "6f9946ff-c3ac-4489-ae80-9ef72d22d682",
                             Email = "user@test.test",
                             EmailConfirmed = false,
                             FirstName = "userName",
+                            Gender = (byte)2,
                             LastName = "lastName",
                             LockoutEnabled = false,
                             NormalizedUserName = "USER@TEST.TEST",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDuFV7CkepW771AFdFhNXSfW6Q7Lz4ZE8fnwvwVrc5yqxWp69k5QeKxVtATLqlcjjw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMvUzja/8Pgj9k6Q1oBdU4YUn8NOnLs6JxBdtc6v5KbMkYb4CzPk0uxNHdyMi7PHeQ==",
                             PhoneNumberConfirmed = false,
                             RegisteredOn = new DateTime(2020, 10, 10, 0, 0, 0, 0, DateTimeKind.Utc),
-                            SecurityStamp = "8d268aa0-63c3-43d8-9482-f61228e41229",
+                            SecurityStamp = "32b97c23-6fd7-4cce-8c08-f21cfa047942",
                             TwoFactorEnabled = false,
                             UserName = "user@test.test"
                         });
@@ -348,6 +386,11 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Migrations
                     b.ToTable("UserRoles", (string)null);
 
                     b.HasData(
+                        new
+                        {
+                            RoleId = new Guid("4b110a01-7935-483a-b127-1646acc211c7"),
+                            UserId = new Guid("630b2bdc-abd2-44eb-9b16-30025d98202e")
+                        },
                         new
                         {
                             RoleId = new Guid("ff3405f7-9a3b-46d3-83d6-e2e3a147f8be"),
