@@ -52,6 +52,7 @@ public static class AuthorizationExtensions
             RoleType.Undefined => Queries.Base.RoleType.Undefined,
             RoleType.User => Queries.Base.RoleType.User,
             RoleType.Admin => Queries.Base.RoleType.Admin,
+            RoleType.MainAdmin => Queries.Base.RoleType.MainAdmin,
             _ => throw new ArgumentOutOfRangeException(nameof(innerType), innerType, null)
         };
     }
@@ -63,6 +64,7 @@ public static class AuthorizationExtensions
             Queries.Base.RoleType.Undefined => RoleType.Undefined,
             Queries.Base.RoleType.User => RoleType.User,
             Queries.Base.RoleType.Admin => RoleType.Admin,
+            Queries.Base.RoleType.MainAdmin => RoleType.MainAdmin,
             _ => throw new ArgumentOutOfRangeException(nameof(outerType), outerType, null)
         };
     }
