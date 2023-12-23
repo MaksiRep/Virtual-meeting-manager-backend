@@ -6,13 +6,14 @@ namespace RU.NSU.FIT.VirtualMeetingManager.Application.Extensions;
 
 public static class MeetingExtensions
 {
-    public static IQueryable<Meeting> OrderByDefault(this IQueryable<Meeting> query, User user, DateTime now)
+    public static IQueryable<Meeting> OrderByDefault(this IQueryable<Meeting> query, Guid userId, DateTime now)
     {
         return query
             .OrderBy(m => m.EndDate < now)
-            .ThenByDescending(m => m.Users.Contains(user))
+            .ThenByDescending(m => m.Users.Any(u => u.Id == userId) || m.Manager.Id.Equals(userId))
             .ThenBy(m => m.StartDate)
-            .ThenBy(m => m.EndDate);
+            .ThenBy(m => m.EndDate)
+            .ThenBy(m => m.Id);
     }
 
     public static IQueryable<Meeting> FilterByDates(this IQueryable<Meeting> query, DateTime? startDate,

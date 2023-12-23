@@ -58,7 +58,7 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
 
             var totalCount = await query.CountAsync(cancellationToken);
             var result = await query
-                .OrderByDefault(user, _dateTimeProvider.UtcNow)
+                .OrderByDefault(user.Id, _dateTimeProvider.UtcNow)
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(m => new MeetingListItemDto
