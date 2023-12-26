@@ -1,4 +1,5 @@
 ﻿using DI.KC.Portal.Infrastructure.Database.Settings;
+using DI.KC.Portal.Infrastructure.Email;
 using RU.NSU.FIT.VirtualMeetingManager.Application.Settings;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Backend.Settings;
@@ -16,4 +17,14 @@ public sealed record WebAppSettings
     /// Настройки аутентификации
     /// </summary>
     public AuthSettings? Auth { get; init; }
+    
+    /// <summary>
+    /// Настройки сервиса Email-рассылок
+    /// </summary>
+    public EmailServiceSettings? EmailService { get; init; }
+    
+    /// <summary>
+    /// Информация о Frontend-приложении
+    /// </summary>
+    public FrontendSettings? Frontend { get; init; }
 }

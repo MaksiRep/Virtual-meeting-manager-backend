@@ -27,9 +27,8 @@ public static class DependencyInjection
 
         builder.Services
             .AddSingleton(webAppSettings)
-            .AddSingleton<AuthSettings>(isp => isp
-                .GetRequiredService<WebAppSettings>()
-                .Auth ?? throw new NullReferenceException("Не заданы настройки аутентификации"));
+            .AddSingleton(webAppSettings
+                .Frontend ?? throw new NullReferenceException("Не заданы настройки Frontend-приложения"));
         
         
         // Logging
@@ -38,7 +37,8 @@ public static class DependencyInjection
         // Services
         builder.Services
             .AddApplication()
-            .AddAuthServices()
+            .AddAuthServices(webAppSettings.Auth)
+            .AddEmailService(webAppSettings.EmailService)
             .AddDatabase(webAppSettings.Database)
             ;
 
