@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using RU.NSU.FIT.VirtualManager.Domain.Auth;
+using RU.NSU.FIT.VirtualManager.Domain.Exceptions;
 using RU.NSU.FIT.VirtualManager.Domain.ValueTypes;
 
 namespace RU.NSU.FIT.VirtualMeetingManager.Backend;
@@ -13,11 +14,11 @@ public class CurrentUser : ICurrentUser
     public CurrentUser(IHttpContextAccessor httpContextAccessor)
     {
         var context = httpContextAccessor.HttpContext
-            ?? throw new ArgumentNullException($"{nameof(IHttpContextAccessor)} не задан");
+            ?? throw new BadRequestException($"{nameof(IHttpContextAccessor)} не задан");
 
         if (context.User.Identity is not ClaimsIdentity identity)
         {
-            throw new ArgumentNullException($"{nameof(ClaimsIdentity)} не задана");
+            throw new BadRequestException($"{nameof(ClaimsIdentity)} не задана");
         }
 
         Id = identity.FindFirst(InnerClaimTypes.UserId) is { } id
@@ -35,6 +36,6 @@ public class CurrentUser : ICurrentUser
 
     private static Exception MakeClaimNotFoundException(string claimType)
     {
-        return new ArgumentNullException($"Claim {claimType} не найден");
+        return new BadRequestException($"Claim {claimType} не найден");
     }
 }

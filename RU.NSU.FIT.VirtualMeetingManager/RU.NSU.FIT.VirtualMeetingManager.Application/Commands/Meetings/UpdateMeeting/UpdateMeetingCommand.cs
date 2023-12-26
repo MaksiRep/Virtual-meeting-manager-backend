@@ -58,6 +58,7 @@ public class UpdateMeetingCommand : IRequest, IEditMeetingCommand
             EntityNotFoundException.ThrowIfNull(user, "Текущий пользователь не найден в системе");
             
             var meeting = await _dbContext.Meetings
+                .Include(m => m.Manager)
                 .FirstOrDefaultAsync(m => m.Id == request.Id, cancellationToken);
             
             EntityNotFoundException.ThrowIfNull(meeting, "Не найдено мероприятие с Id={0}", request.Id);

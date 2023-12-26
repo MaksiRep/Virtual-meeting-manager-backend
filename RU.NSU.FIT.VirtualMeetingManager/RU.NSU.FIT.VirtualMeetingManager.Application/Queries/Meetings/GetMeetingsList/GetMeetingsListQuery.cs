@@ -25,6 +25,7 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
     public GenderType? GenderType { get; init; }
 
     public string? NameTerm { get; init; }
+    public bool? IsUserPresent { get; init; }
     
     [UsedImplicitly]
     public class GetMeetingsListQueryHandler : IRequestHandler<GetMeetingsListQuery, GetMeetingsListResponse>
@@ -54,7 +55,8 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
                 .FilterByMinAge(request.MinAge)
                 .FilterByUserAge(userAge)
                 .FilterByDates(request.StartDate, request.EndDate)
-                .FilterByGender(request.GenderType);
+                .FilterByGender(request.GenderType)
+                .FilterByUserPresence(request.IsUserPresent, user.Id);
 
             var totalCount = await query.CountAsync(cancellationToken);
             var result = await query
@@ -68,7 +70,7 @@ public class GetMeetingsListQuery : IRequest<GetMeetingsListResponse>, IPagedLis
                     StartDate = m.StartDate,
                     EndDate = m.EndDate,
                     ShortDescription = m.ShortDescription,
-                    IsUserVisitMeeting = m.Users.Any(u => u.Id == user.Id) || m.Manager.Id.Equals(user.Id)
+                    IsUserVisitMeeting = m.Users.Any(u => u.Id == user.Id) || m.Manager.Id == user.Id
                 })
                 .ToListAsync(cancellationToken);
 
