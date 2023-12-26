@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RU.NSU.FIT.VirtualManager.Domain;
+using RU.NSU.FIT.VirtualManager.Domain.Auth;
 using RU.NSU.FIT.VirtualManager.Domain.Constants;
 using RU.NSU.FIT.VirtualManager.Domain.Entities;
 using RU.NSU.FIT.VirtualManager.Domain.Exceptions;
@@ -64,7 +65,7 @@ public class RegistrationCommand : IRequest<AuthResponse>, IEditUserCommand
             }
 
             //default role 'User'
-            var role = await _roleManager.FindByNameAsync(RoleType.User.ToString());
+            var role = await _roleManager.FindByNameAsync(RoleConstants.User);
 
             if (role == null)
             {

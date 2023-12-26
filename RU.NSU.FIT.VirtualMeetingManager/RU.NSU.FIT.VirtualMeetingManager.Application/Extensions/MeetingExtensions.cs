@@ -10,7 +10,7 @@ public static class MeetingExtensions
     {
         return query
             .OrderBy(m => m.EndDate < now)
-            .ThenByDescending(m => m.Users.Any(u => u.Id == userId) || m.Manager.Id.Equals(userId))
+            .ThenByDescending(m => m.Users.Any(u => u.Id == userId) || m.Manager.Id == userId)
             .ThenBy(m => m.StartDate)
             .ThenBy(m => m.EndDate)
             .ThenBy(m => m.Id);
@@ -42,6 +42,17 @@ public static class MeetingExtensions
         var dbType = (VirtualManager.Domain.ValueTypes.GenderType)genderType;
 
         return query.Where(m => m.Gender == dbType);
+    }
+    
+    
+    public static IQueryable<Meeting> FilterByUserPresence(this IQueryable<Meeting> query, bool? isUserPresent, Guid userId)
+    {
+        if (isUserPresent is null)
+        {
+            return query;
+        }
+
+        return query.Where(m => m.Users.Any(u => u.Id == userId) || m.Manager.Id == userId);
     }
 
     public static IQueryable<Meeting> FilterByMinAge(this IQueryable<Meeting> query, int? minAge)
