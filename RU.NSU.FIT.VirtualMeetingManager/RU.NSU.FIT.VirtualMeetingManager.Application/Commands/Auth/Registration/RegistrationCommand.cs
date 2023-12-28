@@ -88,7 +88,13 @@ public class RegistrationCommand : IRequest<AuthResponse>, IEditUserCommand
 
             newUser.AddRole(role);
 
-            await _userManager.CreateAsync(newUser, request.Password);
+            var result = await _userManager.CreateAsync(newUser, request.Password);
+
+            if (result.Succeeded is false)
+            {
+                throw new BadRequestException(
+                    $"Ошибки при регистрации нового пользователя: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            }
 
             var response = await _authService.SignInAsync(request.Email, request.Password, cancellationToken);
 
